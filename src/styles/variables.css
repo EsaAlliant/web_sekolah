@@ -1,0 +1,73 @@
+:root {
+  --school-primary: #0E6B64;
+  --school-primary-dark: #0A4F4A;
+  --school-ink: #142A42;
+  --school-accent: #E0932E;
+  --school-surface: #F7F5F1;
+  --school-text: #16211F;
+  --school-sidebar: #142A42;
+  --school-border: #DCE4E1;
+  --font-display: var(--font-display-src, "Sora"), "Segoe UI", sans-serif;
+  --font-body: var(--font-body-src, "Inter"), "Segoe UI", sans-serif;
+  --font-mono: var(--font-mono-src, "IBM Plex Mono"), "Consolas", monospace;
+}
+[data-theme-root][data-theme="dark"] {
+  --school-primary: #3FB3A6;
+  --school-primary-dark: #0E6B64;
+  --school-accent: #F0A94F;
+  --school-surface: #0F211E;
+  --school-text: #E7F1EE;
+  --school-sidebar: #0A1B22;
+  --school-border: #24413C;
+}
+
+body {
+  font-family: var(--font-body);
+}
+
+/* Elemen ini butuh nge-declare ulang color di titik ini (bukan cuma di
+   body), soalnya --school-text yang di-override buat mode gelap hidup di
+   div ini (lihat providers/ThemeProvider.tsx), bukan di <body>. Kalau
+   nggak di-declare ulang di sini, elemen anak yang nggak punya warna
+   sendiri (judul section, paragraf polos) bakal tetap kebawa warna versi
+   terang walau background-nya udah gelap. */
+[data-theme-root] {
+  background: var(--school-surface);
+  color: var(--school-text);
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+}
+
+.section-heading-eyebrow,
+.page-banner-eyebrow,
+.staff-tag,
+.timeline-year,
+.agenda-day,
+.agenda-month,
+.major-badge {
+  font-family: var(--font-mono);
+}
+
+/* Fix defensif: dipaksa langsung ke tiap judul/paragraf, bukan cuma
+   ngandelin inherit dari [data-theme-root] doang — soalnya beberapa
+   komponen (kayak Bootstrap heading utility) kadang nge-declare warna
+   sendiri yang bisa "motong" jalur inherit itu di tengah jalan. */
+[data-theme-root][data-theme="dark"] h1,
+[data-theme-root][data-theme="dark"] h2,
+[data-theme-root][data-theme="dark"] h3,
+[data-theme-root][data-theme="dark"] h4,
+[data-theme-root][data-theme="dark"] h5,
+[data-theme-root][data-theme="dark"] h6,
+[data-theme-root][data-theme="dark"] .h1,
+[data-theme-root][data-theme="dark"] .h2,
+[data-theme-root][data-theme="dark"] .h3,
+[data-theme-root][data-theme="dark"] .h4,
+[data-theme-root][data-theme="dark"] .h5,
+[data-theme-root][data-theme="dark"] .h6,
+[data-theme-root][data-theme="dark"] p {
+  color: var(--school-text);
+}

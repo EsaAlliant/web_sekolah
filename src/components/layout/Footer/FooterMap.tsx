@@ -1,0 +1,1 @@
+export function FooterMap({ mapUrl }: { mapUrl: string }) { return <a className="btn btn-sm btn-outline-light" href={mapUrl} rel="noreferrer" target="_blank"><i className="bi bi-map me-1" aria-hidden="true" />Buka Google Maps</a>; }

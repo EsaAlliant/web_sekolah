@@ -1,0 +1,16 @@
+{
+  "vision": "Menjadi lembaga pendidikan kejuruan unggul yang menghasilkan lulusan berkarakter, kompeten, dan berdaya saing di tingkat nasional maupun global.",
+  "missions": [
+    "Menyelenggarakan pembelajaran berbasis kompetensi yang relevan dengan kebutuhan dunia usaha dan dunia industri.",
+    "Membina karakter peserta didik yang jujur, disiplin, dan bertanggung jawab melalui pembiasaan sehari-hari.",
+    "Mengembangkan sarana dan prasarana praktik yang memadai untuk menunjang keterampilan peserta didik.",
+    "Menjalin kemitraan aktif dengan dunia usaha, dunia industri, dan perguruan tinggi.",
+    "Mendorong budaya literasi, inovasi, dan pemanfaatan teknologi dalam proses pembelajaran."
+  ],
+  "values": [
+    { "label": "Integritas", "icon": "bi-shield-check" },
+    { "label": "Kompeten", "icon": "bi-award" },
+    { "label": "Kolaboratif", "icon": "bi-people" },
+    { "label": "Inovatif", "icon": "bi-lightbulb" }
+  ]
+}

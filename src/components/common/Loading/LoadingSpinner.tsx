@@ -1,0 +1,1 @@
+export function LoadingSpinner({ label = "Memuat..." }: { label?: string }) { return <div className="d-flex min-vh-100 align-items-center justify-content-center gap-2" role="status"><span className="spinner-border" aria-hidden="true" /><span>{label}</span></div>; }

@@ -1,0 +1,2 @@
+import { AnnouncementItem } from "./AnnouncementItem";
+export function RunningAnnouncement({ items }: { items: string[] }) { return <aside className="announcement-bar py-2" aria-label="Pengumuman sekolah"><div className="container overflow-hidden"><div className="announcement-track">{[...items, ...items].map((item, index) => <AnnouncementItem message={item} key={`${item}-${index}`} />)}</div></div></aside>; }

@@ -1,0 +1,14 @@
+[
+  { "id": "g-01", "title": "Praktik Jaringan Komputer", "category": "Kegiatan Belajar", "date": "2026-01-14", "description": "Peserta didik TKJT melakukan praktik instalasi dan konfigurasi jaringan di laboratorium komputer.", "icon": "bi-hdd-network" },
+  { "id": "g-02", "title": "Praktik Layanan Kesehatan Dasar", "category": "Kegiatan Belajar", "date": "2026-02-03", "description": "Simulasi perawatan dasar dan pertolongan pertama oleh peserta didik jurusan Layanan Kesehatan.", "icon": "bi-heart-pulse" },
+  { "id": "g-03", "title": "Upacara Bendera Hari Senin", "category": "Acara Sekolah", "date": "2026-02-16", "description": "Kegiatan rutin upacara bendera untuk menumbuhkan kedisiplinan dan rasa nasionalisme.", "icon": "bi-flag" },
+  { "id": "g-04", "title": "Latihan Ekstrakurikuler Futsal", "category": "Ekstrakurikuler", "date": "2026-03-05", "description": "Latihan rutin tim futsal sekolah dalam persiapan mengikuti turnamen antar sekolah.", "icon": "bi-dribbble" },
+  { "id": "g-05", "title": "Pentas Seni Ekstrakurikuler Musik", "category": "Ekstrakurikuler", "date": "2026-03-20", "description": "Penampilan grup musik sekolah dalam acara pentas seni bulanan.", "icon": "bi-music-note-beamed" },
+  { "id": "g-06", "title": "Juara 1 Lomba Kompetensi Siswa Tingkat Provinsi", "category": "Prestasi", "date": "2026-04-11", "description": "Tim RPL meraih juara 1 pada Lomba Kompetensi Siswa (LKS) tingkat provinsi.", "icon": "bi-trophy" },
+  { "id": "g-07", "title": "Peringatan Hari Pendidikan Nasional", "category": "Acara Sekolah", "date": "2026-05-02", "description": "Upacara dan rangkaian kegiatan memperingati Hari Pendidikan Nasional.", "icon": "bi-mortarboard" },
+  { "id": "g-08", "title": "Laboratorium Komputer", "category": "Fasilitas Sekolah", "date": "2026-05-20", "description": "Ruang laboratorium komputer yang digunakan untuk praktik jurusan TKJT.", "icon": "bi-pc-display" },
+  { "id": "g-09", "title": "Ruang Praktik Layanan Kesehatan", "category": "Fasilitas Sekolah", "date": "2026-05-20", "description": "Ruang praktik keperawatan dan caregiving yang dilengkapi peralatan simulasi medis dasar.", "icon": "bi-hospital" },
+  { "id": "g-10", "title": "Masa Pengenalan Lingkungan Sekolah", "category": "Acara Sekolah", "date": "2026-07-14", "description": "Kegiatan pengenalan lingkungan sekolah bagi peserta didik baru tahun ajaran 2026/2027.", "icon": "bi-people" },
+  { "id": "g-11", "title": "Jalan Sehat dan Senam Bersama", "category": "Acara Sekolah", "date": "2026-09-06", "description": "Jalan sehat dan senam pagi dalam rangka menyemarakkan HUT Kemerdekaan RI.", "icon": "bi-heart-pulse" },
+  { "id": "g-12", "title": "Latihan Ekstrakurikuler Pramuka", "category": "Ekstrakurikuler", "date": "2026-06-08", "description": "Kegiatan kepramukaan rutin untuk melatih kemandirian dan kerja sama peserta didik.", "icon": "bi-compass" }
+]

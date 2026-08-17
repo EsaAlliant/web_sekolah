@@ -1,0 +1,11 @@
+{
+  "intro": "berdiri dari semangat untuk menghadirkan pendidikan kejuruan yang berkualitas dan terjangkau bagi masyarakat. Sejak awal berdiri, sekolah terus melakukan pembenahan di berbagai aspek, mulai dari kurikulum, fasilitas, hingga tenaga pendidik, guna menjawab kebutuhan dunia kerja yang terus berkembang.",
+  "milestones": [
+    { "year": "1998", "title": "Sekolah Didirikan", "description": "Beroperasi dengan 3 rombongan belajar dan 2 program keahlian." },
+    { "year": "2005", "title": "Akreditasi Pertama", "description": "Meraih akreditasi B dari Badan Akreditasi Nasional Sekolah/Madrasah." },
+    { "year": "2012", "title": "Perluasan Gedung", "description": "Pembangunan gedung praktik baru untuk mendukung program keahlian teknik." },
+    { "year": "2016", "title": "Akreditasi A", "description": "Naik peringkat menjadi akreditasi A setelah pembenahan mutu akademik." },
+    { "year": "2020", "title": "Transformasi Digital", "description": "Penerapan pembelajaran daring dan sistem informasi akademik terintegrasi." },
+    { "year": "2026", "title": "Sekolah Masa Kini", "description": "Terus berkembang dengan 6 program keahlian dan kemitraan industri yang luas." }
+  ]
+}

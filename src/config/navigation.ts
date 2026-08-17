@@ -1,0 +1,1 @@
+export const navigationConfig = { website: [{ label: "Beranda", href: "/" }, { label: "Tentang", href: "/about" }, { label: "Berita", href: "/news" }, { label: "Galeri", href: "/gallery" }, { label: "PPDB", href: "/ppdb" }] } as const;

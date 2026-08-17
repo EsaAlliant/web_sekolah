@@ -1,0 +1,22 @@
+[
+  {
+    "id": "tkjt",
+    "name": "Teknik Komputer Jaringan Telekomunikasi",
+    "abbreviation": "TKJT",
+    "description": "Membekali peserta didik dengan keterampilan instalasi, konfigurasi, dan pemeliharaan jaringan komputer serta infrastruktur telekomunikasi.",
+    "duration": "3 Tahun",
+    "icon": "bi-hdd-network",
+    "competencies": ["Jaringan komputer dan telekomunikasi", "Administrasi server", "Instalasi perangkat fiber optik", "Keamanan jaringan", "Troubleshooting perangkat"],
+    "careerPaths": ["Teknisi Jaringan", "Network Administrator", "Teknisi Telekomunikasi", "IT Support"]
+  },
+  {
+    "id": "layanan-kesehatan",
+    "name": "Layanan Kesehatan",
+    "abbreviation": "LKes",
+    "description": "Menyiapkan tenaga terampil di bidang layanan kesehatan dasar, keperawatan, dan asisten tenaga medis.",
+    "duration": "3 Tahun",
+    "icon": "bi-heart-pulse",
+    "competencies": ["Dasar-dasar keperawatan", "Anatomi dan fisiologi tubuh manusia", "Pertolongan pertama (P3K)", "Etika dan komunikasi kesehatan", "Praktik klinik dasar"],
+    "careerPaths": ["Asisten Perawat", "Asisten Tenaga Kesehatan", "Staf Klinik/Puskesmas", "Caregiver"]
+  }
+]

@@ -1,0 +1,10 @@
+export { Footer } from "./Footer";
+export { FooterAbout } from "./FooterAbout";
+export { FooterLinks } from "./FooterLinks";
+export { FooterContact } from "./FooterContact";
+export { FooterVisitor } from "./FooterVisitor";
+export { FooterSocial } from "./FooterSocial";
+export { FooterBottom } from "./FooterBottom";
+export { FooterLogo } from "./FooterLogo";
+export { FooterMap } from "./FooterMap";
+export { FooterSkeleton } from "./FooterSkeleton";

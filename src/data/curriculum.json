@@ -1,0 +1,23 @@
+{
+  "framework": "Kurikulum Merdeka",
+  "intro": "Kurikulum disusun untuk membekali peserta didik dengan kompetensi teknis sesuai program keahlian, sekaligus menguatkan karakter melalui pembelajaran berbasis proyek dan pengalaman kerja nyata di industri.",
+  "profile": {
+    "curriculumName": "SMK Merdeka Layanan Penunjang Keperawatan dan Caregiving (K)",
+    "schedule": "Sehari Penuh/5 hari",
+    "dataSemester": "2025/2026 Genap",
+    "internetAccess": "Broadband",
+    "electricitySource": "PLN",
+    "electricityPower": "23.000 VA",
+    "landArea": "1.271 m\u00b2"
+  },
+  "components": [
+    { "title": "Pembelajaran Intrakurikuler", "portion": "70%", "description": "Mata pelajaran umum dan kejuruan yang disampaikan secara reguler di kelas dan bengkel praktik.", "icon": "bi-book" },
+    { "title": "Projek Penguatan Profil Pelajar Pancasila", "portion": "20%", "description": "Pembelajaran berbasis proyek lintas mata pelajaran untuk menguatkan karakter dan kolaborasi.", "icon": "bi-people" },
+    { "title": "Praktik Kerja Lapangan", "portion": "10%", "description": "Pengalaman kerja langsung di dunia usaha dan dunia industri mitra sekolah.", "icon": "bi-briefcase" }
+  ],
+  "structure": [
+    { "grade": "Kelas X", "title": "Dasar-Dasar Program Keahlian", "description": "Peserta didik mempelajari fondasi kejuruan, mata pelajaran umum, dan mulai mengenal alat serta lingkungan kerja sesuai jurusan." },
+    { "grade": "Kelas XI", "title": "Konsentrasi Keahlian", "description": "Pendalaman kompetensi teknis sesuai program keahlian, disertai proyek kolaboratif dan simulasi kerja." },
+    { "grade": "Kelas XII", "title": "Praktik Kerja Lapangan dan Uji Kompetensi", "description": "Penempatan Praktik Kerja Lapangan di industri mitra, dilanjutkan uji kompetensi keahlian sebagai syarat kelulusan." }
+  ]
+}

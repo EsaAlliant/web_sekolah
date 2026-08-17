@@ -1,0 +1,11 @@
+[
+  { "id": "d-01", "title": "Formulir Pendaftaran PPDB 2026/2027", "category": "PPDB", "fileType": "pdf", "fileSize": "420 KB", "updatedDate": "2026-06-01", "description": "Formulir yang wajib diisi calon peserta didik baru saat mendaftar.", "fileUrl": "#" },
+  { "id": "d-02", "title": "Alur dan Syarat Pendaftaran PPDB", "category": "PPDB", "fileType": "pdf", "fileSize": "310 KB", "updatedDate": "2026-06-01", "description": "Panduan lengkap tahapan dan berkas yang dibutuhkan untuk mendaftar.", "fileUrl": "#" },
+  { "id": "d-03", "title": "Kalender Akademik Tahun Ajaran 2026/2027", "category": "Akademik", "fileType": "pdf", "fileSize": "540 KB", "updatedDate": "2026-07-05", "description": "Jadwal kegiatan belajar mengajar, ujian, dan libur sekolah selama satu tahun ajaran.", "fileUrl": "#" },
+  { "id": "d-04", "title": "Tata Tertib Peserta Didik", "category": "Akademik", "fileType": "pdf", "fileSize": "280 KB", "updatedDate": "2026-07-10", "description": "Peraturan dan tata tertib yang berlaku bagi seluruh peserta didik.", "fileUrl": "#" },
+  { "id": "d-05", "title": "Struktur Kurikulum TKJT", "category": "Kurikulum", "fileType": "xlsx", "fileSize": "95 KB", "updatedDate": "2026-06-20", "description": "Rincian mata pelajaran dan jam pembelajaran program keahlian TKJT.", "fileUrl": "#" },
+  { "id": "d-06", "title": "Struktur Kurikulum Layanan Kesehatan", "category": "Kurikulum", "fileType": "xlsx", "fileSize": "92 KB", "updatedDate": "2026-06-20", "description": "Rincian mata pelajaran dan jam pembelajaran program keahlian Layanan Kesehatan.", "fileUrl": "#" },
+  { "id": "d-07", "title": "Formulir Surat Keterangan Aktif Sekolah", "category": "Administrasi", "fileType": "docx", "fileSize": "48 KB", "updatedDate": "2026-05-15", "description": "Formulir permohonan surat keterangan aktif bagi peserta didik.", "fileUrl": "#" },
+  { "id": "d-08", "title": "Formulir Izin Praktik Kerja Lapangan", "category": "Administrasi", "fileType": "docx", "fileSize": "52 KB", "updatedDate": "2026-05-15", "description": "Formulir persetujuan orang tua/wali untuk penempatan Praktik Kerja Lapangan.", "fileUrl": "#" },
+  { "id": "d-09", "title": "Brosur Profil Sekolah", "category": "Umum", "fileType": "pdf", "fileSize": "1.2 MB", "updatedDate": "2026-06-01", "description": "Ringkasan profil, program keahlian, dan fasilitas sekolah.", "fileUrl": "#" }
+]

@@ -1,0 +1,2 @@
+import type { SocialLink } from "@/types/settings";
+export function FooterSocial({ links }: { links: SocialLink[] }) { return <div className="d-flex gap-3"><span className="visually-hidden">Media sosial sekolah</span>{links.map((link) => <a href={link.href} aria-label={link.label} key={link.label} rel="noreferrer" target="_blank"><i className={`bi ${link.icon}`} aria-hidden="true" /></a>)}</div>; }

@@ -1,0 +1,2 @@
+@keyframes school-spin { to { transform: rotate(360deg); } }
+.school-spin { animation: school-spin 0.8s linear infinite; }

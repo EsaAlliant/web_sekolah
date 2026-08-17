@@ -1,0 +1,1 @@
+export function PageHeader({ title, description }: { title: string; description?: string }) { return <header className="mb-4"><h1 className="h2 mb-2">{title}</h1>{description && <p className="text-muted-strong mb-0">{description}</p>}</header>; }

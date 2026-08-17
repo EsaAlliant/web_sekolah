@@ -1,0 +1,10 @@
+[
+  { "id": "s-01", "name": "Sutrisno, S.E.", "position": "Kepala Tata Usaha", "unit": "Tata Usaha" },
+  { "id": "s-02", "name": "Wulan Sari, A.Md.", "position": "Staf Administrasi Akademik", "unit": "Tata Usaha" },
+  { "id": "s-03", "name": "Bambang Irawan", "position": "Staf Administrasi Keuangan", "unit": "Tata Usaha" },
+  { "id": "s-04", "name": "Ratna Dewi, S.I.Pust.", "position": "Pustakawan", "unit": "Perpustakaan" },
+  { "id": "s-05", "name": "Agus Setiawan, A.Md.", "position": "Laboran", "unit": "Laboratorium" },
+  { "id": "s-06", "name": "Doni Firmansyah", "position": "Teknisi IT", "unit": "IT Support" },
+  { "id": "s-07", "name": "Joko Susilo", "position": "Petugas Keamanan", "unit": "Keamanan dan Kebersihan" },
+  { "id": "s-08", "name": "Slamet Riyadi", "position": "Petugas Kebersihan", "unit": "Keamanan dan Kebersihan" }
+]

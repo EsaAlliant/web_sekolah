@@ -1,0 +1,2 @@
+"use client";
+export function SearchButton({ variant = "navbar" }: { variant?: "navbar" | "topbar" }) { const className = variant === "topbar" ? "btn btn-sm btn-outline-light" : "btn btn-sm btn-outline-primary"; return <button className={className} type="button" onClick={() => window.dispatchEvent(new Event("school:open-search"))} aria-label="Buka pencarian"><i className="bi bi-search" aria-hidden="true" /></button>; }

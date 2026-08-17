@@ -1,0 +1,1 @@
+export function FloatingWhatsapp({ href }: { href: string }) { return <a className="floating-action btn btn-success" href={href} target="_blank" rel="noreferrer" aria-label="Hubungi sekolah melalui WhatsApp"><i className="bi bi-whatsapp" aria-hidden="true" /></a>; }

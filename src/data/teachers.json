@@ -1,0 +1,14 @@
+[
+  { "id": "t-01", "name": "Dr. Ahmad Wirawan, S.Pd., M.M.", "position": "Kepala Sekolah", "subjectGroup": "Manajemen", "education": "S3 Manajemen Pendidikan", "nip": "196805121993031002" },
+  { "id": "t-02", "name": "Siti Rahmawati, S.Pd.", "position": "Wakil Kepala Sekolah Kurikulum", "subjectGroup": "Matematika", "education": "S1 Pendidikan Matematika", "nip": "197203152000122001" },
+  { "id": "t-03", "name": "Budi Santoso, S.Pd.", "position": "Guru Mapel", "subjectGroup": "Bahasa Indonesia", "education": "S1 Pendidikan Bahasa Indonesia", "nip": "198009102005011006" },
+  { "id": "t-04", "name": "Dewi Lestari, S.Pd., M.Pd.", "position": "Guru Mapel", "subjectGroup": "Bahasa Inggris", "education": "S2 Pendidikan Bahasa Inggris", "nip": "198305222008012004" },
+  { "id": "t-05", "name": "Andi Prasetyo, S.Kom.", "position": "Guru Produktif", "subjectGroup": "Rekayasa Perangkat Lunak", "education": "S1 Teknik Informatika", "nip": "199001152014021001" },
+  { "id": "t-06", "name": "Rina Marlina, S.Kom.", "position": "Guru Produktif", "subjectGroup": "Teknik Komputer dan Jaringan", "education": "S1 Ilmu Komputer", "nip": "199105102015022002" },
+  { "id": "t-07", "name": "Hendra Gunawan, S.Pd.", "position": "Guru Mapel", "subjectGroup": "Ilmu Pengetahuan Alam", "education": "S1 Pendidikan Fisika", "nip": "198711202011011003" },
+  { "id": "t-08", "name": "Maya Puspita, S.Pd.", "position": "Guru Mapel", "subjectGroup": "Ilmu Pengetahuan Sosial", "education": "S1 Pendidikan Ekonomi", "nip": "198902182012122003" },
+  { "id": "t-09", "name": "Fajar Nugroho, S.Pd.", "position": "Guru Mapel", "subjectGroup": "Pendidikan Jasmani", "education": "S1 Pendidikan Olahraga", "nip": "199203102016011002" },
+  { "id": "t-10", "name": "Nur Aini, S.Ag.", "position": "Guru Mapel", "subjectGroup": "Pendidikan Agama", "education": "S1 Pendidikan Agama Islam", "nip": "198406252009012005" },
+  { "id": "t-11", "name": "Yusuf Habibi, S.Pd.", "position": "Guru BK", "subjectGroup": "Bimbingan Konseling", "education": "S1 Bimbingan dan Konseling", "nip": "199007142013011004" },
+  { "id": "t-12", "name": "Lina Kartika, S.Pd.", "position": "Wali Kelas XII RPL 1", "subjectGroup": "Rekayasa Perangkat Lunak", "education": "S1 Pendidikan Teknik Informatika", "nip": "199204052017022001" }
+]

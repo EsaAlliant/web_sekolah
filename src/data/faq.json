@@ -1,0 +1,10 @@
+[
+  { "id": "f-01", "question": "Bagaimana cara mendaftar sebagai peserta didik baru?", "answer": "Pendaftaran dilakukan secara daring melalui halaman PPDB di website ini. Calon peserta didik mengisi formulir, mengunggah berkas yang dibutuhkan, lalu menunggu proses verifikasi dan pengumuman kelulusan.", "category": "PPDB" },
+  { "id": "f-02", "question": "Apa saja berkas yang perlu disiapkan untuk mendaftar?", "answer": "Berkas yang dibutuhkan antara lain fotokopi kartu keluarga, akta kelahiran, ijazah atau surat keterangan lulus, pas foto terbaru, dan rapor semester akhir.", "category": "PPDB" },
+  { "id": "f-03", "question": "Apakah ada biaya pendaftaran PPDB?", "answer": "Pendaftaran PPDB tidak dipungut biaya. Informasi lebih lanjut mengenai biaya pendidikan dapat ditanyakan langsung ke bagian tata usaha sekolah.", "category": "PPDB" },
+  { "id": "f-04", "question": "Program keahlian apa saja yang tersedia di sekolah ini?", "answer": "Saat ini sekolah menyelenggarakan dua program keahlian, yaitu Teknik Komputer Jaringan Telekomunikasi (TKJT) dan Layanan Kesehatan.", "category": "Akademik" },
+  { "id": "f-05", "question": "Berapa lama masa pendidikan di sekolah ini?", "answer": "Masa pendidikan ditempuh selama 3 tahun, termasuk program Praktik Kerja Lapangan (PKL) di dunia usaha dan dunia industri pada Kelas XII.", "category": "Akademik" },
+  { "id": "f-06", "question": "Bagaimana cara melihat jadwal kegiatan sekolah?", "answer": "Jadwal kegiatan dapat dilihat pada halaman Agenda, atau diunduh melalui Kalender Akademik pada halaman Download.", "category": "Akademik" },
+  { "id": "f-07", "question": "Bagaimana cara menghubungi pihak sekolah?", "answer": "Pihak sekolah dapat dihubungi melalui nomor telepon, email, atau WhatsApp yang tercantum pada halaman Kontak, sesuai jam layanan yang berlaku.", "category": "Umum" },
+  { "id": "f-08", "question": "Apakah sekolah menyediakan asrama atau tempat tinggal?", "answer": "Saat ini sekolah belum menyediakan fasilitas asrama. Peserta didik dari luar kota disarankan mencari tempat tinggal di sekitar lingkungan sekolah.", "category": "Umum" }
+]

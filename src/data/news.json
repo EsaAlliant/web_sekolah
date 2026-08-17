@@ -1,0 +1,77 @@
+[
+  {
+    "id": "n-01",
+    "slug": "juara-1-lks-tingkat-provinsi",
+    "title": "Tim RPL Raih Juara 1 Lomba Kompetensi Siswa Tingkat Provinsi",
+    "category": "Prestasi",
+    "author": "Humas Sekolah",
+    "date": "2026-04-12",
+    "excerpt": "Tim Rekayasa Perangkat Lunak berhasil membawa pulang gelar juara 1 pada ajang LKS tingkat provinsi tahun ini.",
+    "content": [
+      "Prestasi membanggakan kembali ditorehkan oleh peserta didik sekolah pada ajang Lomba Kompetensi Siswa (LKS) tingkat provinsi yang berlangsung pekan lalu.",
+      "Tim dari program keahlian Rekayasa Perangkat Lunak berhasil meraih juara 1 setelah bersaing ketat dengan puluhan peserta dari berbagai sekolah se-provinsi.",
+      "Kepala Sekolah menyampaikan apresiasi tinggi atas kerja keras peserta didik dan pembimbing, serta berharap prestasi ini dapat memotivasi peserta didik lain untuk terus berkarya."
+    ],
+    "icon": "bi-trophy"
+  },
+  {
+    "id": "n-02",
+    "slug": "pembukaan-ppdb-2026-2027",
+    "title": "Pendaftaran Peserta Didik Baru Tahun Ajaran 2026/2027 Resmi Dibuka",
+    "category": "PPDB",
+    "author": "Panitia PPDB",
+    "date": "2026-06-01",
+    "excerpt": "Pendaftaran peserta didik baru dibuka mulai hari ini melalui jalur daring pada website resmi sekolah.",
+    "content": [
+      "Sekolah resmi membuka pendaftaran peserta didik baru untuk tahun ajaran 2026/2027 mulai hari ini.",
+      "Calon peserta didik dapat mendaftar secara daring melalui halaman PPDB pada website resmi sekolah dengan melengkapi formulir dan berkas yang dibutuhkan.",
+      "Panitia mengimbau calon peserta didik untuk membaca alur dan syarat pendaftaran secara saksama sebelum mengisi formulir, guna menghindari kesalahan data."
+    ],
+    "icon": "bi-pencil-square"
+  },
+  {
+    "id": "n-03",
+    "slug": "mpls-tahun-ajaran-baru",
+    "title": "Masa Pengenalan Lingkungan Sekolah Diikuti 180 Peserta Didik Baru",
+    "category": "Kegiatan",
+    "author": "Humas Sekolah",
+    "date": "2026-07-16",
+    "excerpt": "Kegiatan MPLS berlangsung selama tiga hari dengan berbagai materi pengenalan lingkungan dan tata tertib sekolah.",
+    "content": [
+      "Sebanyak 180 peserta didik baru mengikuti rangkaian Masa Pengenalan Lingkungan Sekolah (MPLS) yang berlangsung selama tiga hari.",
+      "Kegiatan ini bertujuan mengenalkan lingkungan, fasilitas, tata tertib, serta budaya sekolah kepada peserta didik baru.",
+      "Selain sesi materi di dalam kelas, peserta didik juga diajak berkeliling mengenal ruang praktik program keahlian TKJT dan Layanan Kesehatan."
+    ],
+    "icon": "bi-people"
+  },
+  {
+    "id": "n-04",
+    "slug": "kerja-sama-industri-tkjt",
+    "title": "Sekolah Jalin Kerja Sama dengan Perusahaan Telekomunikasi untuk Program PKL",
+    "category": "Kemitraan",
+    "author": "Wakil Kepala Sekolah Kurikulum",
+    "date": "2026-05-28",
+    "excerpt": "Kerja sama ini membuka kesempatan bagi peserta didik TKJT untuk menjalani Praktik Kerja Lapangan di perusahaan telekomunikasi.",
+    "content": [
+      "Sekolah menandatangani nota kesepahaman dengan salah satu perusahaan telekomunikasi nasional untuk mendukung program Praktik Kerja Lapangan (PKL).",
+      "Melalui kerja sama ini, peserta didik program keahlian Teknik Komputer Jaringan Telekomunikasi (TKJT) akan mendapatkan kesempatan magang langsung di lapangan.",
+      "Kepala Sekolah berharap kemitraan ini dapat meningkatkan kompetensi dan kesiapan kerja peserta didik setelah lulus."
+    ],
+    "icon": "bi-hdd-network"
+  },
+  {
+    "id": "n-05",
+    "slug": "peringatan-hut-ri-jalan-sehat",
+    "title": "Semarak HUT RI: Jalan Sehat dan Malam Hiburan Musik Meriahkan Warga Sekitar",
+    "category": "Kegiatan",
+    "author": "Humas Sekolah",
+    "date": "2026-09-07",
+    "excerpt": "Kegiatan jalan sehat dan senam pagi diikuti ratusan warga dalam rangka menyemarakkan HUT Kemerdekaan RI.",
+    "content": [
+      "Dalam rangka menyemarakkan Hari Ulang Tahun Kemerdekaan Republik Indonesia, sekolah turut berpartisipasi dalam kegiatan jalan sehat dan senam pagi bersama warga sekitar.",
+      "Kegiatan yang dimulai pukul 06.30 WIB dari depan Pos RT 3 ini diikuti oleh ratusan peserta, dilengkapi pembagian doorprize berupa peralatan elektronik rumah tangga.",
+      "Rangkaian acara ditutup dengan malam hiburan musik yang menghadirkan grup musik lokal, menambah semarak perayaan kemerdekaan di lingkungan sekolah."
+    ],
+    "icon": "bi-heart-pulse"
+  }
+]
