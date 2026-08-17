@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { deleteAdminUser } from "@/app/admin/users/actions";
+import { confirmDelete, showError } from "@/lib/alerts";
 
 export function DeleteAdminUserButton({ id, itemLabel, disabled }: { id: string; itemLabel: string; disabled?: boolean }) {
   const router = useRouter();
@@ -17,7 +18,7 @@ export function DeleteAdminUserButton({ id, itemLabel, disabled }: { id: string;
   }
 
   const handleDelete = async () => {
-    const confirmed = window.confirm(`Hapus akun admin "${itemLabel}"? Tindakan ini tidak bisa dibatalkan.`);
+    const confirmed = await confirmDelete(itemLabel, "Akun admin ini akan dihapus permanen dan tidak bisa login lagi.");
     if (!confirmed) return;
 
     setDeleting(true);
@@ -25,7 +26,7 @@ export function DeleteAdminUserButton({ id, itemLabel, disabled }: { id: string;
     setDeleting(false);
 
     if (result.error) {
-      window.alert(`Gagal menghapus: ${result.error}`);
+      await showError("Gagal menghapus", result.error);
       return;
     }
 

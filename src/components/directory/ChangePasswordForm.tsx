@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
+import { showSuccess } from "@/lib/alerts";
 
 export function ChangePasswordForm({ email }: { email: string }) {
   const [currentPassword, setCurrentPassword] = useState("");
@@ -9,12 +10,10 @@ export function ChangePasswordForm({ email }: { email: string }) {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setError(null);
-    setSuccess(false);
 
     if (newPassword !== confirmPassword) {
       setError("Konfirmasi kata sandi baru tidak cocok.");
@@ -47,10 +46,10 @@ export function ChangePasswordForm({ email }: { email: string }) {
       return;
     }
 
-    setSuccess(true);
     setCurrentPassword("");
     setNewPassword("");
     setConfirmPassword("");
+    await showSuccess("Kata sandi berhasil diganti");
   };
 
   return (
@@ -71,7 +70,6 @@ export function ChangePasswordForm({ email }: { email: string }) {
       </div>
 
       {error && <div className="alert alert-danger py-2 small mt-3" role="alert">{error}</div>}
-      {success && <div className="alert alert-success py-2 small mt-3" role="alert">Kata sandi berhasil diganti.</div>}
 
       <button className="btn btn-primary mt-3" disabled={saving} type="submit">
         {saving ? "Menyimpan..." : "Simpan Kata Sandi"}

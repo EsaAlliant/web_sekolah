@@ -2,18 +2,17 @@
 
 import { useState } from "react";
 import { resetAdminUserPassword } from "@/app/admin/users/actions";
+import { showSuccess } from "@/lib/alerts";
 
 export function ResetAdminPasswordForm({ userId }: { userId: string }) {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setError(null);
-    setSuccess(false);
 
     if (password !== confirmPassword) {
       setError("Konfirmasi kata sandi tidak cocok.");
@@ -29,9 +28,9 @@ export function ResetAdminPasswordForm({ userId }: { userId: string }) {
       return;
     }
 
-    setSuccess(true);
     setPassword("");
     setConfirmPassword("");
+    await showSuccess("Kata sandi berhasil diganti");
   };
 
   return (
@@ -48,7 +47,6 @@ export function ResetAdminPasswordForm({ userId }: { userId: string }) {
       </div>
 
       {error && <div className="alert alert-danger py-2 small mt-3" role="alert">{error}</div>}
-      {success && <div className="alert alert-success py-2 small mt-3" role="alert">Kata sandi berhasil diganti.</div>}
 
       <button className="btn btn-outline-primary mt-3" disabled={saving} type="submit">
         {saving ? "Menyimpan..." : "Reset Kata Sandi"}

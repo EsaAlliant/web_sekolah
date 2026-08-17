@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { confirmDelete, showError } from "@/lib/alerts";
 
 export function DeleteRowButton({ table, id, itemLabel }: { table: string; id: string; itemLabel: string }) {
   const router = useRouter();
@@ -10,7 +11,7 @@ export function DeleteRowButton({ table, id, itemLabel }: { table: string; id: s
   const [justDeleted, setJustDeleted] = useState(false);
 
   const handleDelete = async () => {
-    const confirmed = window.confirm(`Hapus "${itemLabel}"? Tindakan ini tidak bisa dibatalkan.`);
+    const confirmed = await confirmDelete(itemLabel);
     if (!confirmed) return;
 
     setDeleting(true);
@@ -19,7 +20,7 @@ export function DeleteRowButton({ table, id, itemLabel }: { table: string; id: s
     setDeleting(false);
 
     if (error) {
-      window.alert(`Gagal menghapus: ${error.message}`);
+      await showError("Gagal menghapus", error.message);
       return;
     }
 
