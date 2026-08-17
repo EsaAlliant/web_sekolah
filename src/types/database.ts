@@ -278,3 +278,12 @@ export interface HomepageFeatureRow {
   icon: string;
   sort_order: number;
 }
+
+// Profil role untuk tiap akun admin. auth.users (bawaan Supabase) cuma
+// nyimpen kredensial login (email/password), role & nama ditaro di sini.
+export interface AdminProfileRow {
+  id: string;
+  full_name: string | null;
+  role: "super_admin" | "kejur" | "wakur";
+  created_at: string;
+}

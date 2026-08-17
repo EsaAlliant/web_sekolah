@@ -5,8 +5,8 @@ export type AdminRole = "super_admin" | "kejur" | "wakur";
 // dibatasi juga untuk kejur/wakur.
 const ROLE_ACCESS: Record<AdminRole, string[]> = {
   super_admin: ["*"],
-  kejur: ["/admin/dashboard", "/admin/majors", "/admin/gallery", "/admin/news", "/admin/announcements"],
-  wakur: ["/admin/dashboard", "/admin/agenda", "/admin/gallery", "/admin/news", "/admin/announcements"],
+  kejur: ["/admin/dashboard", "/admin/majors", "/admin/gallery", "/admin/news", "/admin/announcements", "/admin/account"],
+  wakur: ["/admin/dashboard", "/admin/agenda", "/admin/gallery", "/admin/news", "/admin/announcements", "/admin/account"],
 };
 
 export const ROLE_LABELS: Record<AdminRole, string> = {

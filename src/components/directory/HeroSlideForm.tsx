@@ -39,7 +39,7 @@ export function HeroSlideForm({ initialData }: { initialData?: HeroSlideRow }) {
       return;
     }
 
-    router.push("/admin/hero");
+    router.push(isEdit ? "/admin/hero?saved=edit" : "/admin/hero?saved=new");
     router.refresh();
   };
 

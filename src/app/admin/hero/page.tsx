@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { DeleteRowButton } from "@/components/directory/DeleteRowButton";
+import { SavedBanner } from "@/components/common/SavedBanner";
 import { createServerClient } from "@/lib/supabase/server";
 import type { HeroSlideRow } from "@/types/database";
 
@@ -10,6 +11,7 @@ export default async function AdminHeroPage() {
 
   return (
     <div>
+      <SavedBanner />
       <div className="d-flex align-items-center justify-content-between mb-4">
         <div>
           <h1 className="h4 mb-1">Hero (Slide Beranda)</h1>

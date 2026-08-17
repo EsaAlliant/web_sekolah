@@ -7,6 +7,7 @@ import { createClient } from "@/lib/supabase/client";
 export function DeleteRowButton({ table, id, itemLabel }: { table: string; id: string; itemLabel: string }) {
   const router = useRouter();
   const [deleting, setDeleting] = useState(false);
+  const [justDeleted, setJustDeleted] = useState(false);
 
   const handleDelete = async () => {
     const confirmed = window.confirm(`Hapus "${itemLabel}"? Tindakan ini tidak bisa dibatalkan.`);
@@ -22,8 +23,13 @@ export function DeleteRowButton({ table, id, itemLabel }: { table: string; id: s
       return;
     }
 
+    setJustDeleted(true);
     router.refresh();
   };
+
+  if (justDeleted) {
+    return <span className="text-success small"><i aria-hidden="true" className="bi bi-check-circle-fill" /> Terhapus</span>;
+  }
 
   return (
     <button className="btn btn-outline-danger btn-sm" disabled={deleting} onClick={handleDelete} type="button">

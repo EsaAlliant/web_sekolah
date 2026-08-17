@@ -52,7 +52,11 @@ export const dashboardNavigationGroups: DashboardNavGroup[] = [
   },
   {
     label: "Sistem",
-    items: [{ label: "Pengaturan", href: "/admin/settings" }],
+    items: [
+      { label: "Akun Saya", href: "/admin/account" },
+      { label: "Pengguna Admin", href: "/admin/users" },
+      { label: "Pengaturan", href: "/admin/settings" },
+    ],
   },
 ];
 

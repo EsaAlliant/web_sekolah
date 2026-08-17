@@ -8,6 +8,7 @@ import { createClient } from "@/lib/supabase/client";
 import type { NewsItem } from "@/types/news";
 
 const CATEGORY_SUGGESTIONS = ["Prestasi", "PPDB", "Kegiatan", "Kemitraan"];
+const ICON_SUGGESTIONS = ["bi-newspaper", "bi-trophy", "bi-mortarboard", "bi-people", "bi-megaphone", "bi-calendar-event"];
 
 function slugify(text: string) {
   return text.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
@@ -81,6 +82,13 @@ export function NewsForm({ initialData }: { initialData?: NewsItem }) {
         <div className="col-md-6">
           <label className="form-label" htmlFor="date">Tanggal</label>
           <input className="form-control" id="date" onChange={(event) => setDate(event.target.value)} required type="date" value={date} />
+        </div>
+        <div className="col-md-6">
+          <label className="form-label" htmlFor="icon">Ikon (kalau belum ada gambar cover)</label>
+          <input className="form-control" id="icon" list="news-icon-suggestions" onChange={(event) => setIcon(event.target.value)} type="text" value={icon} />
+          <datalist id="news-icon-suggestions">
+            {ICON_SUGGESTIONS.map((item) => <option key={item} value={item} />)}
+          </datalist>
         </div>
         <div className="col-12">
           <label className="form-label" htmlFor="excerpt">Ringkasan Singkat</label>
