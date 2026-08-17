@@ -49,8 +49,10 @@
 .floating-theme .theme-switcher { align-items: center; border: 0; border-radius: 50%; display: inline-flex; height: 100%; justify-content: center; width: 100%; }
 .hero-carousel { background: var(--school-surface); overflow: hidden; position: relative; }
 .hero-slides { min-height: clamp(25rem, 48vw, 37rem); position: relative; }
-.hero-slide { align-items: center; display: none; min-height: inherit; padding-block: clamp(3.5rem, 8vw, 7rem); }
+.hero-slide { align-items: center; display: none; min-height: inherit; padding-block: clamp(3.5rem, 8vw, 7rem); position: relative; }
 .hero-slide.is-active { display: flex; }
+.hero-slide-overlay { background: linear-gradient(118deg, rgba(0, 0, 0, .55) 0%, rgba(0, 0, 0, .25) 70%); inset: 0; position: absolute; }
+.hero-slide-content { position: relative; z-index: 1; }
 .hero-slide-primary { background: linear-gradient(118deg, #142A42 0%, #0E6B64 58%, #63C7BB 160%); color: #fff; }
 .hero-slide-gold { background: linear-gradient(118deg, #7A4E0E 0%, #E0932E 58%, #F5C877 160%); color: #fff; }
 .hero-slide-green { background: linear-gradient(118deg, #0A4F4A 0%, #0E6B64 58%, #63C7BB 160%); color: #fff; }

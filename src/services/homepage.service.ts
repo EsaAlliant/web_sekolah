@@ -19,6 +19,7 @@ export async function getHeroSlides(): Promise<HeroSlideContent[]> {
     actionLabel: row.action_label,
     actionHref: row.action_href,
     theme: row.theme,
+    imageUrl: row.image_url,
   }));
 }
 

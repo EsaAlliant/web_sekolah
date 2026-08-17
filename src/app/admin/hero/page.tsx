@@ -23,11 +23,19 @@ export default async function AdminHeroPage() {
       ) : (
         <div className="table-responsive">
           <table className="table align-middle">
-            <thead><tr><th style={{ width: "3rem" }}>Urutan</th><th>Judul</th><th>Tema</th><th>Tombol</th><th style={{ width: "12rem" }}>Aksi</th></tr></thead>
+            <thead><tr><th style={{ width: "3rem" }}>Urutan</th><th style={{ width: "5rem" }}>Gambar</th><th>Judul</th><th>Tema</th><th>Tombol</th><th style={{ width: "12rem" }}>Aksi</th></tr></thead>
             <tbody>
               {slides.map((slide) => (
                 <tr key={slide.id}>
                   <td>{slide.sort_order}</td>
+                  <td>
+                    {slide.image_url ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img alt={slide.title} src={slide.image_url} style={{ width: "4rem", height: "2.5rem", objectFit: "cover", borderRadius: "0.375rem" }} />
+                    ) : (
+                      <span className="text-muted-strong small">-</span>
+                    )}
+                  </td>
                   <td>{slide.title}</td>
                   <td><span className={`staff-tag hero-theme-${slide.theme}`}>{slide.theme}</span></td>
                   <td>{slide.action_label} → {slide.action_href}</td>

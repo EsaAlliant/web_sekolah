@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { ImageUploader } from "@/components/directory/ImageUploader";
 import type { HeroSlideRow } from "@/types/database";
 
 export function HeroSlideForm({ initialData }: { initialData?: HeroSlideRow }) {
@@ -16,6 +17,7 @@ export function HeroSlideForm({ initialData }: { initialData?: HeroSlideRow }) {
   const [actionHref, setActionHref] = useState(initialData?.action_href ?? "");
   const [theme, setTheme] = useState(initialData?.theme ?? "primary");
   const [sortOrder, setSortOrder] = useState(initialData?.sort_order ?? 0);
+  const [imageUrl, setImageUrl] = useState<string | undefined>(initialData?.image_url ?? undefined);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -25,7 +27,7 @@ export function HeroSlideForm({ initialData }: { initialData?: HeroSlideRow }) {
     setError(null);
 
     const supabase = createClient();
-    const payload = { eyebrow, title, description, action_label: actionLabel, action_href: actionHref, theme, sort_order: sortOrder };
+    const payload = { eyebrow, title, description, action_label: actionLabel, action_href: actionHref, theme, sort_order: sortOrder, image_url: imageUrl ?? null };
 
     const { error: saveError } = isEdit
       ? await supabase.from("hero_slides").update(payload).eq("id", initialData!.id)
@@ -44,6 +46,11 @@ export function HeroSlideForm({ initialData }: { initialData?: HeroSlideRow }) {
   return (
     <form className="ppdb-form" onSubmit={handleSubmit}>
       <div className="row g-3">
+        <div className="col-12">
+          <label className="form-label">Gambar Latar Slide</label>
+          <ImageUploader currentUrl={imageUrl} folder="hero" label="Pilih Gambar" maxDimension={1920} onUploaded={setImageUrl} />
+        </div>
+
         <div className="col-md-6">
           <label className="form-label" htmlFor="eyebrow">Label Kecil (Eyebrow)</label>
           <input className="form-control" id="eyebrow" onChange={(event) => setEyebrow(event.target.value)} required type="text" value={eyebrow} />

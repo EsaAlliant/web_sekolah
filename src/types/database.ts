@@ -268,6 +268,7 @@ export interface HeroSlideRow {
   action_href: string;
   theme: "primary" | "gold" | "green";
   sort_order: number;
+  image_url: string | null;
 }
 
 export interface HomepageFeatureRow {
