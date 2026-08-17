@@ -5,4 +5,5 @@ export interface Testimonial {
   detail: string;
   quote: string;
   photoUrl?: string;
+  videoUrl?: string; // ← tambahkan baris ini
 }
