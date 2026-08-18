@@ -20,6 +20,7 @@ export interface WebsiteSettingsRow {
   accreditation: string | null;
   founded_year: string | null;
   logo_url: string | null;
+  footer_links_title: string | null;
 }
 
 export interface NavigationItemRow {
@@ -49,6 +50,13 @@ export interface VisitorStatsRow {
 export interface AnnouncementTickerRow {
   id: string;
   message: string;
+  sort_order: number;
+}
+
+export interface FooterLinkRow {
+  id: string;
+  label: string;
+  href: string;
   sort_order: number;
 }
 

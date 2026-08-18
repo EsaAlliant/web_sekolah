@@ -1,3 +1,5 @@
+import type { FooterLink } from "./footer";
+
 export type ThemePreference = "light" | "dark" | "system";
 
 export interface NavigationItem {
@@ -27,6 +29,8 @@ export interface WebsiteSettings {
   logoUrl?: string;
   navigation: NavigationItem[];
   socialLinks: SocialLink[];
+  footerLinksTitle: string;
+  footerLinks: FooterLink[];
   announcements: string[];
   visitorStats: { today: string; month: string; year: string; total: string };
 }

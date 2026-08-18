@@ -1,13 +1,14 @@
 import { createServerClient } from "@/lib/supabase/server";
 import type {
   AnnouncementTickerRow,
+  FooterLinkRow,
   NavigationItemRow,
   SocialLinkRow,
   WebsiteSettingsRow,
 } from "@/types/database";
 import type { NavigationItem, WebsiteSettings } from "@/types/settings";
 
-const fallbackIdentity: Omit<WebsiteSettings, "navigation" | "socialLinks" | "announcements" | "visitorStats"> = {
+const fallbackIdentity: Omit<WebsiteSettings, "navigation" | "socialLinks" | "footerLinks" | "announcements" | "visitorStats"> = {
   name: "SMK Negeri Nusantara",
   shortName: "SMKN Nusantara",
   description: "Sekolah menengah kejuruan yang menyiapkan generasi berkarakter, kompeten, dan berdaya saing.",
@@ -23,6 +24,7 @@ const fallbackIdentity: Omit<WebsiteSettings, "navigation" | "socialLinks" | "an
   theme: "system",
   accreditation: "A (Unggul)",
   foundedYear: "1998",
+  footerLinksTitle: "Link Terkait",
 };
 
 function buildNavigationTree(rows: NavigationItemRow[]): NavigationItem[] {
@@ -46,27 +48,32 @@ export async function getWebsiteSettings(): Promise<WebsiteSettings> {
     { data: navRows, error: navError },
     { data: socialRows, error: socialError },
     { data: tickerRows, error: tickerError },
+    { data: footerLinkRows, error: footerLinkError },
   ] = await Promise.all([
     supabase.from("website_settings").select("*").eq("id", 1).single(),
     supabase.from("navigation_items").select("*"),
     supabase.from("social_links").select("*").order("sort_order"),
     supabase.from("announcement_ticker").select("*").order("sort_order"),
+    supabase.from("footer_links").select("*").order("sort_order"),
   ]);
 
   if (settingsError) console.error("getWebsiteSettings (identity) error:", settingsError.message);
   if (navError) console.error("getWebsiteSettings (navigation) error:", navError.message);
   if (socialError) console.error("getWebsiteSettings (social) error:", socialError.message);
   if (tickerError) console.error("getWebsiteSettings (ticker) error:", tickerError.message);
+  if (footerLinkError) console.error("getWebsiteSettings (footer links) error:", footerLinkError.message);
 
   const identity = settingsRow ? mapIdentity(settingsRow as WebsiteSettingsRow) : fallbackIdentity;
   const navigation = navRows ? buildNavigationTree(navRows as NavigationItemRow[]) : [];
   const socialLinks = (socialRows as SocialLinkRow[] | null)?.map((row) => ({ label: row.label, href: row.href, icon: row.icon })) ?? [];
   const announcements = (tickerRows as AnnouncementTickerRow[] | null)?.map((row) => row.message) ?? [];
+  const footerLinks = (footerLinkRows as FooterLinkRow[] | null)?.map((row) => ({ label: row.label, href: row.href })) ?? [];
 
   return {
     ...identity,
     navigation,
     socialLinks,
+    footerLinks,
     announcements,
     // visitorStats sengaja tidak diisi dari sini — statistik pengunjung
     // real-time ditangani terpisah lewat services/visitor.service.ts
@@ -93,6 +100,7 @@ function mapIdentity(row: WebsiteSettingsRow) {
     accreditation: row.accreditation ?? "",
     foundedYear: row.founded_year ?? "",
     logoUrl: row.logo_url ?? undefined,
+    footerLinksTitle: row.footer_links_title ?? "Link Terkait",
   };
 }
 

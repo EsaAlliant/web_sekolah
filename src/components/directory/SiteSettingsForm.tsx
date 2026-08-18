@@ -4,10 +4,18 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import type { WebsiteSettings, SocialLink } from "@/types/settings";
+import type { FooterLink } from "@/types/footer";
 
 interface SocialLinkRow extends SocialLink { id: string; }
+interface FooterLinkRow extends FooterLink { id: string; }
 
-export function SiteSettingsForm({ settings, socialLinks }: { settings: WebsiteSettings; socialLinks: SocialLinkRow[] }) {
+let tempIdCounter = 0;
+function createTempId() {
+  tempIdCounter += 1;
+  return `new-${Date.now()}-${tempIdCounter}`;
+}
+
+export function SiteSettingsForm({ settings, socialLinks, footerLinks }: { settings: WebsiteSettings; socialLinks: SocialLinkRow[]; footerLinks: FooterLinkRow[] }) {
   const router = useRouter();
 
   const [name, setName] = useState(settings.name);
@@ -23,6 +31,9 @@ export function SiteSettingsForm({ settings, socialLinks }: { settings: WebsiteS
   const [accreditation, setAccreditation] = useState(settings.accreditation);
   const [foundedYear, setFoundedYear] = useState(settings.foundedYear);
   const [links, setLinks] = useState(socialLinks);
+  const [footerLinksTitle, setFooterLinksTitle] = useState(settings.footerLinksTitle);
+  const [footerLinkItems, setFooterLinkItems] = useState(footerLinks);
+  const originalFooterLinkIds = footerLinks.map((link) => link.id);
 
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -30,6 +41,18 @@ export function SiteSettingsForm({ settings, socialLinks }: { settings: WebsiteS
 
   const updateLinkHref = (id: string, href: string) => {
     setLinks(links.map((link) => (link.id === id ? { ...link, href } : link)));
+  };
+
+  const updateFooterLink = (id: string, field: "label" | "href", value: string) => {
+    setFooterLinkItems(footerLinkItems.map((link) => (link.id === id ? { ...link, [field]: value } : link)));
+  };
+
+  const addFooterLink = () => {
+    setFooterLinkItems([...footerLinkItems, { id: createTempId(), label: "", href: "" }]);
+  };
+
+  const removeFooterLink = (id: string) => {
+    setFooterLinkItems(footerLinkItems.filter((link) => link.id !== id));
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -53,16 +76,39 @@ export function SiteSettingsForm({ settings, socialLinks }: { settings: WebsiteS
       office_hours: officeHours,
       accreditation,
       founded_year: foundedYear,
+      footer_links_title: footerLinksTitle,
     }).eq("id", 1);
 
     const linkErrors = await Promise.all(
       links.map((link) => supabase.from("social_links").update({ href: link.href }).eq("id", link.id)),
     );
 
+    const removedFooterLinkIds = originalFooterLinkIds.filter(
+      (id) => !footerLinkItems.some((link) => link.id === id),
+    );
+    await Promise.all(removedFooterLinkIds.map((id) => supabase.from("footer_links").delete().eq("id", id)));
+
+    const footerLinkUpserts = await Promise.all(
+      footerLinkItems.map((link, index) => {
+        const isNew = link.id.startsWith("new-");
+        return isNew
+          ? supabase.from("footer_links").insert({ label: link.label, href: link.href, sort_order: index }).select().single()
+          : supabase.from("footer_links").update({ label: link.label, href: link.href, sort_order: index }).eq("id", link.id).select().single();
+      }),
+    );
+
     setSaving(false);
     const failedLink = linkErrors.find((result) => result.error);
-    const saveError = settingsError || failedLink?.error;
+    const failedFooterLink = footerLinkUpserts.find((result) => result.error);
+    const saveError = settingsError || failedLink?.error || failedFooterLink?.error;
     if (saveError) { setError(saveError.message); return; }
+
+    setFooterLinkItems(
+      footerLinkItems.map((link, index) => {
+        const savedId = footerLinkUpserts[index].data?.id as string | undefined;
+        return savedId ? { id: savedId, label: link.label, href: link.href } : link;
+      }),
+    );
 
     setSaved(true);
     router.refresh();
@@ -139,6 +185,28 @@ export function SiteSettingsForm({ settings, socialLinks }: { settings: WebsiteS
             <input className="form-control" onChange={(event) => updateLinkHref(link.id, event.target.value)} placeholder="https://..." type="text" value={link.href} />
           </div>
         ))}
+      </div>
+
+      <h2 className="h6 mb-3">Link Terkait (tautan di Footer)</h2>
+      <div className="row g-3 mb-4">
+        <div className="col-12">
+          <label className="form-label" htmlFor="footerLinksTitle">Judul Bagian</label>
+          <input className="form-control" id="footerLinksTitle" onChange={(event) => setFooterLinksTitle(event.target.value)} type="text" value={footerLinksTitle} />
+        </div>
+        {footerLinkItems.map((link) => (
+          <div className="col-12 d-flex gap-2 align-items-start" key={link.id}>
+            <input aria-label="Label link" className="form-control" onChange={(event) => updateFooterLink(link.id, "label", event.target.value)} placeholder="Label, mis. Info GTK" type="text" value={link.label} />
+            <input aria-label="URL link" className="form-control" onChange={(event) => updateFooterLink(link.id, "href", event.target.value)} placeholder="https://..." type="text" value={link.href} />
+            <button aria-label="Hapus link" className="btn btn-outline-danger flex-shrink-0" onClick={() => removeFooterLink(link.id)} type="button">
+              <i aria-hidden="true" className="bi bi-trash" />
+            </button>
+          </div>
+        ))}
+        <div className="col-12">
+          <button className="btn btn-sm btn-outline-secondary" onClick={addFooterLink} type="button">
+            <i aria-hidden="true" className="bi bi-plus-lg me-1" />Tambah Link
+          </button>
+        </div>
       </div>
 
       {error && <div className="alert alert-danger py-2 small" role="alert">{error}</div>}

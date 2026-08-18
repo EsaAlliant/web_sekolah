@@ -77,6 +77,18 @@ const initialState: FormState = {
 const STEP_LABELS = ["Data Diri", "Data Ayah", "Data Ibu", "Data Wali"];
 const TOTAL_STEPS = STEP_LABELS.length;
 
+// Field angka yang panjangnya harus pas (bukan rentang kayak Nomor HP).
+// Dipakai buat nunjukin peringatan sendiri (bukan cuma tooltip bawaan
+// browser) begitu user ngisi tapi jumlah digitnya belum pas.
+const EXACT_LENGTH_FIELDS: Partial<Record<keyof FormState, { length: number; label: string }>> = {
+  kkNumber: { length: 16, label: "Nomor KK" },
+  nik: { length: 16, label: "NIK" },
+  postalCode: { length: 5, label: "Kode Pos" },
+  fatherNik: { length: 16, label: "NIK Ayah" },
+  motherNik: { length: 16, label: "NIK Ibu" },
+  guardianNik: { length: 16, label: "NIK Wali" },
+};
+
 export function PpdbForm({ majors, sheetWebhookUrl }: { majors: Major[]; sheetWebhookUrl: string }) {
   const [form, setForm] = useState<FormState>(initialState);
   const [step, setStep] = useState(1);
@@ -85,6 +97,8 @@ export function PpdbForm({ majors, sheetWebhookUrl }: { majors: Major[]; sheetWe
   const [saveError, setSaveError] = useState(false);
   const [sheetError, setSheetError] = useState(false);
   const [emailError, setEmailError] = useState(false);
+  const [phoneError, setPhoneError] = useState<string | null>(null);
+  const [numericErrors, setNumericErrors] = useState<Partial<Record<keyof FormState, string>>>({});
   const formRef = useRef<HTMLFormElement>(null);
   const stepRefs = useRef<Array<HTMLFieldSetElement | null>>([]);
 
@@ -99,6 +113,47 @@ export function PpdbForm({ majors, sheetWebhookUrl }: { majors: Major[]; sheetWe
   const updateNumeric = (field: keyof FormState, maxLength: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
     const digitsOnly = event.target.value.replace(/\D/g, "").slice(0, maxLength);
     setForm((prev) => ({ ...prev, [field]: digitsOnly }));
+
+    // Field yang panjangnya harus pas (KK, NIK, dst): begitu jumlah digitnya
+    // udah pas (atau dikosongin lagi), hapus peringatannya biar nggak nyantol.
+    const rule = EXACT_LENGTH_FIELDS[field];
+    if (rule && (digitsOnly.length === 0 || digitsOnly.length === rule.length)) {
+      setNumericErrors((prev) => ({ ...prev, [field]: undefined }));
+    }
+  };
+
+  const validateExactLengthField = (field: keyof FormState) => () => {
+    const rule = EXACT_LENGTH_FIELDS[field];
+    if (!rule) return true;
+    const digits = (form[field] as string).length;
+    if (digits > 0 && digits < rule.length) {
+      setNumericErrors((prev) => ({
+        ...prev,
+        [field]: `${rule.label} baru ${digits} digit, harus tepat ${rule.length} digit. Mohon periksa kembali.`,
+      }));
+      return false;
+    }
+    setNumericErrors((prev) => ({ ...prev, [field]: undefined }));
+    return true;
+  };
+
+  // Nomor HP dicek terpisah dari updateNumeric biasa supaya bisa langsung
+  // kasih pesan peringatan sendiri (bukan cuma tooltip bawaan browser) saat
+  // jumlah digitnya masih kurang dari 10.
+  const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const digitsOnly = event.target.value.replace(/\D/g, "").slice(0, 13);
+    setForm((prev) => ({ ...prev, phone: digitsOnly }));
+    if (digitsOnly.length === 0 || digitsOnly.length >= 10) setPhoneError(null);
+  };
+
+  const validatePhoneField = () => {
+    const digits = form.phone.length;
+    if (digits > 0 && digits < 10) {
+      setPhoneError(`Nomor HP baru ${digits} digit, minimal 10 digit. Mohon periksa kembali.`);
+      return false;
+    }
+    setPhoneError(null);
+    return true;
   };
 
   // Validasi cuma field-field di sesi yang sedang aktif, bukan seluruh form.
@@ -120,13 +175,36 @@ export function PpdbForm({ majors, sheetWebhookUrl }: { majors: Major[]; sheetWe
   };
 
   const goToStep = (target: number) => {
-    if (target > step && !validateStep(step - 1)) return;
+    if (target > step) {
+      if (step === 1 && !validatePhoneField()) {
+        document.getElementById("phone")?.focus();
+        document.getElementById("phone")?.scrollIntoView({ behavior: "smooth", block: "center" });
+        return;
+      }
+      const invalidField = (Object.keys(EXACT_LENGTH_FIELDS) as Array<keyof FormState>).find(
+        (field) => !validateExactLengthField(field)(),
+      );
+      if (invalidField) {
+        document.getElementById(invalidField)?.focus();
+        document.getElementById(invalidField)?.scrollIntoView({ behavior: "smooth", block: "center" });
+        return;
+      }
+      if (!validateStep(step - 1)) return;
+    }
     setStep(target);
     window.scrollTo({ top: (formRef.current?.getBoundingClientRect().top ?? 0) + window.scrollY - 100, behavior: "smooth" });
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    const invalidField = (Object.keys(EXACT_LENGTH_FIELDS) as Array<keyof FormState>).find(
+      (field) => !validateExactLengthField(field)(),
+    );
+    if (invalidField) {
+      document.getElementById(invalidField)?.focus();
+      document.getElementById(invalidField)?.scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
     if (!validateStep(step - 1)) return;
 
     const major = majors.find((item) => item.id === form.majorId);
@@ -331,13 +409,21 @@ export function PpdbForm({ majors, sheetWebhookUrl }: { majors: Major[]; sheetWe
           </div>
           <div className="col-md-3">
             <label className="form-label" htmlFor="kkNumber">Nomor Kartu Keluarga</label>
-            <input className="form-control" id="kkNumber" inputMode="numeric" maxLength={16} onChange={updateNumeric("kkNumber", 16)} pattern="\d{16}" required title="Nomor KK harus 16 digit angka" type="text" value={form.kkNumber} />
-            <div className="form-text">16 digit angka</div>
+            <input className={`form-control${numericErrors.kkNumber ? " is-invalid" : ""}`} id="kkNumber" inputMode="numeric" maxLength={16} onBlur={validateExactLengthField("kkNumber")} onChange={updateNumeric("kkNumber", 16)} pattern="\d{16}" required title="Nomor KK harus 16 digit angka" type="text" value={form.kkNumber} />
+            {numericErrors.kkNumber ? (
+              <div className="text-danger small mt-1"><i aria-hidden="true" className="bi bi-exclamation-circle me-1" />{numericErrors.kkNumber}</div>
+            ) : (
+              <div className="form-text">16 digit angka</div>
+            )}
           </div>
           <div className="col-md-3">
             <label className="form-label" htmlFor="nik">No. Induk Kependudukan (NIK)</label>
-            <input className="form-control" id="nik" inputMode="numeric" maxLength={16} onChange={updateNumeric("nik", 16)} pattern="\d{16}" required title="NIK harus 16 digit angka" type="text" value={form.nik} />
-            <div className="form-text">16 digit angka</div>
+            <input className={`form-control${numericErrors.nik ? " is-invalid" : ""}`} id="nik" inputMode="numeric" maxLength={16} onBlur={validateExactLengthField("nik")} onChange={updateNumeric("nik", 16)} pattern="\d{16}" required title="NIK harus 16 digit angka" type="text" value={form.nik} />
+            {numericErrors.nik ? (
+              <div className="text-danger small mt-1"><i aria-hidden="true" className="bi bi-exclamation-circle me-1" />{numericErrors.nik}</div>
+            ) : (
+              <div className="form-text">16 digit angka</div>
+            )}
           </div>
 
           <div className="col-md-6">
@@ -404,14 +490,22 @@ export function PpdbForm({ majors, sheetWebhookUrl }: { majors: Major[]; sheetWe
           </div>
           <div className="col-md-4">
             <label className="form-label" htmlFor="postalCode">Kode Pos</label>
-            <input className="form-control" id="postalCode" inputMode="numeric" maxLength={5} onChange={updateNumeric("postalCode", 5)} pattern="\d{5}" required title="Kode Pos harus 5 digit angka" type="text" value={form.postalCode} />
-            <div className="form-text">5 digit angka</div>
+            <input className={`form-control${numericErrors.postalCode ? " is-invalid" : ""}`} id="postalCode" inputMode="numeric" maxLength={5} onBlur={validateExactLengthField("postalCode")} onChange={updateNumeric("postalCode", 5)} pattern="\d{5}" required title="Kode Pos harus 5 digit angka" type="text" value={form.postalCode} />
+            {numericErrors.postalCode ? (
+              <div className="text-danger small mt-1"><i aria-hidden="true" className="bi bi-exclamation-circle me-1" />{numericErrors.postalCode}</div>
+            ) : (
+              <div className="form-text">5 digit angka</div>
+            )}
           </div>
 
           <div className="col-md-6">
             <label className="form-label" htmlFor="phone">Nomor HP</label>
-            <input className="form-control" id="phone" inputMode="numeric" maxLength={13} onChange={updateNumeric("phone", 13)} pattern="\d{10,13}" required title="Nomor HP harus 10-13 digit angka" type="tel" value={form.phone} />
-            <div className="form-text">10-13 digit angka</div>
+            <input className={`form-control${phoneError ? " is-invalid" : ""}`} id="phone" inputMode="numeric" maxLength={13} onBlur={validatePhoneField} onChange={handlePhoneChange} pattern="\d{10,13}" required title="Nomor HP harus 10-13 digit angka" type="tel" value={form.phone} />
+            {phoneError ? (
+              <div className="text-danger small mt-1"><i aria-hidden="true" className="bi bi-exclamation-circle me-1" />{phoneError}</div>
+            ) : (
+              <div className="form-text">10-13 digit angka</div>
+            )}
           </div>
           <div className="col-md-6">
             <label className="form-label" htmlFor="email">Alamat Email</label>
@@ -448,8 +542,12 @@ export function PpdbForm({ majors, sheetWebhookUrl }: { majors: Major[]; sheetWe
           </div>
           <div className="col-md-6">
             <label className="form-label" htmlFor="fatherNik">NIK Ayah</label>
-            <input className="form-control" id="fatherNik" inputMode="numeric" maxLength={16} onChange={updateNumeric("fatherNik", 16)} pattern="\d{16}" required title="NIK harus 16 digit angka" type="text" value={form.fatherNik} />
-            <div className="form-text">16 digit angka</div>
+            <input className={`form-control${numericErrors.fatherNik ? " is-invalid" : ""}`} id="fatherNik" inputMode="numeric" maxLength={16} onBlur={validateExactLengthField("fatherNik")} onChange={updateNumeric("fatherNik", 16)} pattern="\d{16}" required title="NIK harus 16 digit angka" type="text" value={form.fatherNik} />
+            {numericErrors.fatherNik ? (
+              <div className="text-danger small mt-1"><i aria-hidden="true" className="bi bi-exclamation-circle me-1" />{numericErrors.fatherNik}</div>
+            ) : (
+              <div className="form-text">16 digit angka</div>
+            )}
           </div>
           <div className="col-md-3">
             <label className="form-label" htmlFor="fatherBirthYear">Tahun Lahir Ayah</label>
@@ -489,8 +587,12 @@ export function PpdbForm({ majors, sheetWebhookUrl }: { majors: Major[]; sheetWe
           </div>
           <div className="col-md-6">
             <label className="form-label" htmlFor="motherNik">NIK Ibu</label>
-            <input className="form-control" id="motherNik" inputMode="numeric" maxLength={16} onChange={updateNumeric("motherNik", 16)} pattern="\d{16}" required title="NIK harus 16 digit angka" type="text" value={form.motherNik} />
-            <div className="form-text">16 digit angka</div>
+            <input className={`form-control${numericErrors.motherNik ? " is-invalid" : ""}`} id="motherNik" inputMode="numeric" maxLength={16} onBlur={validateExactLengthField("motherNik")} onChange={updateNumeric("motherNik", 16)} pattern="\d{16}" required title="NIK harus 16 digit angka" type="text" value={form.motherNik} />
+            {numericErrors.motherNik ? (
+              <div className="text-danger small mt-1"><i aria-hidden="true" className="bi bi-exclamation-circle me-1" />{numericErrors.motherNik}</div>
+            ) : (
+              <div className="form-text">16 digit angka</div>
+            )}
           </div>
           <div className="col-md-3">
             <label className="form-label" htmlFor="motherBirthYear">Tahun Lahir Ibu</label>
@@ -531,8 +633,12 @@ export function PpdbForm({ majors, sheetWebhookUrl }: { majors: Major[]; sheetWe
           </div>
           <div className="col-md-6">
             <label className="form-label" htmlFor="guardianNik">NIK Wali</label>
-            <input className="form-control" id="guardianNik" inputMode="numeric" maxLength={16} onChange={updateNumeric("guardianNik", 16)} pattern="\d{16}" title="NIK harus 16 digit angka" type="text" value={form.guardianNik} />
-            <div className="form-text">16 digit angka (kalau diisi)</div>
+            <input className={`form-control${numericErrors.guardianNik ? " is-invalid" : ""}`} id="guardianNik" inputMode="numeric" maxLength={16} onBlur={validateExactLengthField("guardianNik")} onChange={updateNumeric("guardianNik", 16)} pattern="\d{16}" title="NIK harus 16 digit angka" type="text" value={form.guardianNik} />
+            {numericErrors.guardianNik ? (
+              <div className="text-danger small mt-1"><i aria-hidden="true" className="bi bi-exclamation-circle me-1" />{numericErrors.guardianNik}</div>
+            ) : (
+              <div className="form-text">16 digit angka (kalau diisi)</div>
+            )}
           </div>
           <div className="col-md-3">
             <label className="form-label" htmlFor="guardianBirthYear">Tahun Lahir Wali</label>
