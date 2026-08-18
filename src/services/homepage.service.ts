@@ -13,12 +13,8 @@ export async function getHeroSlides(): Promise<HeroSlideContent[]> {
   }
 
   return (data as HeroSlideRow[]).map((row) => ({
-    eyebrow: row.eyebrow,
-    title: row.title,
-    description: row.description,
-    actionLabel: row.action_label,
-    actionHref: row.action_href,
-    theme: row.theme,
+    id: row.id,
+    sortOrder: row.sort_order,
     imageUrl: row.image_url,
   }));
 }

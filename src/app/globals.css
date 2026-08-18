@@ -48,10 +48,6 @@ button, input, textarea, select { font: inherit; }
 .admin-module-card strong { font-size: 0.95rem; }
 .admin-module-card span { color: #64748b; font-size: 0.8rem; }
 
-.hero-theme-primary { background: #e3edfd; color: #2563eb; }
-.hero-theme-gold { background: #fef3c7; color: #b45309; }
-.hero-theme-green { background: #dcfce7; color: #15803d; }
-
 .ppdb-status-select.status-baru { background-color: #f1f5f9; color: #475569; }
 .ppdb-status-select.status-diverifikasi { background-color: #fef3c7; color: #b45309; }
 .ppdb-status-select.status-diterima { background-color: #dcfce7; color: #15803d; }

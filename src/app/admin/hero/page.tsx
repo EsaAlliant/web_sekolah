@@ -15,7 +15,7 @@ export default async function AdminHeroPage() {
       <div className="d-flex align-items-center justify-content-between mb-4">
         <div>
           <h1 className="h4 mb-1">Hero (Slide Beranda)</h1>
-          <p className="text-muted-strong mb-0">Slide besar yang muncul paling atas di halaman Beranda.</p>
+          <p className="text-muted-strong mb-0">Slide besar yang muncul paling atas di halaman Beranda. Gunakan gambar rasio 2:1 agar tidak terpotong di layar mobile.</p>
         </div>
         <Link className="btn btn-primary btn-sm" href="/admin/hero/new"><i aria-hidden="true" className="bi bi-plus-lg" /> Tambah Slide</Link>
       </div>
@@ -25,7 +25,7 @@ export default async function AdminHeroPage() {
       ) : (
         <div className="table-responsive">
           <table className="table align-middle">
-            <thead><tr><th style={{ width: "3rem" }}>Urutan</th><th style={{ width: "5rem" }}>Gambar</th><th>Judul</th><th>Tema</th><th>Tombol</th><th style={{ width: "12rem" }}>Aksi</th></tr></thead>
+            <thead><tr><th style={{ width: "5rem" }}>Urutan</th><th>Gambar</th><th style={{ width: "12rem" }}>Aksi</th></tr></thead>
             <tbody>
               {slides.map((slide) => (
                 <tr key={slide.id}>
@@ -33,18 +33,15 @@ export default async function AdminHeroPage() {
                   <td>
                     {slide.image_url ? (
                       // eslint-disable-next-line @next/next/no-img-element
-                      <img alt={slide.title} src={slide.image_url} style={{ width: "4rem", height: "2.5rem", objectFit: "cover", borderRadius: "0.375rem" }} />
+                      <img alt={`Slide ${slide.sort_order}`} src={slide.image_url} style={{ width: "8rem", height: "4rem", objectFit: "cover", borderRadius: "0.375rem" }} />
                     ) : (
                       <span className="text-muted-strong small">-</span>
                     )}
                   </td>
-                  <td>{slide.title}</td>
-                  <td><span className={`staff-tag hero-theme-${slide.theme}`}>{slide.theme}</span></td>
-                  <td>{slide.action_label} → {slide.action_href}</td>
                   <td>
                     <div className="d-flex gap-2">
                       <Link className="btn btn-outline-primary btn-sm" href={`/admin/hero/${slide.id}/edit`}><i aria-hidden="true" className="bi bi-pencil" /> Edit</Link>
-                      <DeleteRowButton id={slide.id} itemLabel={slide.title} table="hero_slides" />
+                      <DeleteRowButton id={slide.id} itemLabel={`Slide ${slide.sort_order}`} table="hero_slides" />
                     </div>
                   </td>
                 </tr>

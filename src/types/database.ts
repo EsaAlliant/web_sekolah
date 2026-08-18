@@ -261,12 +261,6 @@ export interface FacilityRow {
 
 export interface HeroSlideRow {
   id: string;
-  eyebrow: string;
-  title: string;
-  description: string;
-  action_label: string;
-  action_href: string;
-  theme: "primary" | "gold" | "green";
   sort_order: number;
   image_url: string | null;
 }

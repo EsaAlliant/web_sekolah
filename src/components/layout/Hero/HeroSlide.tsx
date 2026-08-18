@@ -1,2 +1,23 @@
-export interface HeroSlideContent { eyebrow: string; title: string; description: string; actionLabel: string; actionHref: string; theme: "primary" | "gold" | "green"; imageUrl?: string | null; }
-export function HeroSlide({ slide, isActive }: { slide: HeroSlideContent; isActive: boolean }) { return <article className={`hero-slide hero-slide-${slide.theme} ${isActive ? "is-active" : ""}`} aria-hidden={!isActive} style={slide.imageUrl ? { backgroundImage: `url(${slide.imageUrl})`, backgroundSize: "cover", backgroundPosition: "center" } : undefined}><div className="hero-slide-overlay" aria-hidden="true" /><div className="container hero-slide-content"><p className="hero-eyebrow">{slide.eyebrow}</p><h1>{slide.title}</h1><p>{slide.description}</p><a className="btn btn-light btn-lg" href={slide.actionHref}>{slide.actionLabel}<i className="bi bi-arrow-right ms-2" aria-hidden="true" /></a></div></article>; }
+export interface HeroSlideContent {
+  id: string;
+  sortOrder: number;
+  imageUrl?: string | null;
+}
+
+export function HeroSlide({ slide, isActive }: { slide: HeroSlideContent; isActive: boolean }) {
+  return (
+    <article
+      aria-hidden={!isActive}
+      className={`hero-slide ${isActive ? "is-active" : ""}`}
+    >
+      {slide.imageUrl ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          alt={`Sorotan sekolah ${slide.sortOrder + 1}`}
+          className="hero-slide-image"
+          src={slide.imageUrl}
+        />
+      ) : null}
+    </article>
+  );
+}
