@@ -23,32 +23,56 @@ export default async function AdminHeroPage() {
       {slides.length === 0 ? (
         <p className="text-muted-strong">Belum ada slide. Beranda akan kosong di bagian atas kalau tidak ada slide sama sekali.</p>
       ) : (
-        <div className="table-responsive">
-          <table className="table align-middle">
-            <thead><tr><th style={{ width: "5rem" }}>Urutan</th><th>Gambar</th><th style={{ width: "12rem" }}>Aksi</th></tr></thead>
-            <tbody>
-              {slides.map((slide) => (
-                <tr key={slide.id}>
-                  <td>{slide.sort_order}</td>
-                  <td>
+        <>
+          <div className="table-responsive d-none d-md-block">
+            <table className="table align-middle">
+              <thead><tr><th style={{ width: "5rem" }}>Urutan</th><th>Gambar</th><th style={{ width: "12rem" }}>Aksi</th></tr></thead>
+              <tbody>
+                {slides.map((slide) => (
+                  <tr key={slide.id}>
+                    <td>{slide.sort_order}</td>
+                    <td>
+                      {slide.image_url ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img alt={`Slide ${slide.sort_order}`} src={slide.image_url} style={{ width: "8rem", height: "4rem", objectFit: "cover", borderRadius: "0.375rem" }} />
+                      ) : (
+                        <span className="text-muted-strong small">-</span>
+                      )}
+                    </td>
+                    <td>
+                      <div className="d-flex gap-2">
+                        <Link className="btn btn-outline-primary btn-sm" href={`/admin/hero/${slide.id}/edit`}><i aria-hidden="true" className="bi bi-pencil" /> Edit</Link>
+                        <DeleteRowButton id={slide.id} itemLabel={`Slide ${slide.sort_order}`} table="hero_slides" />
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="admin-list-cards d-md-none">
+            {slides.map((slide) => (
+              <div className="admin-list-card" key={slide.id}>
+                <div className="admin-list-card-top">
+                  <div className="admin-list-card-identity">
                     {slide.image_url ? (
                       // eslint-disable-next-line @next/next/no-img-element
-                      <img alt={`Slide ${slide.sort_order}`} src={slide.image_url} style={{ width: "8rem", height: "4rem", objectFit: "cover", borderRadius: "0.375rem" }} />
+                      <img alt={`Slide ${slide.sort_order}`} src={slide.image_url} style={{ width: "5.5rem", height: "3rem", objectFit: "cover", borderRadius: "0.375rem", flexShrink: 0 }} />
                     ) : (
                       <span className="text-muted-strong small">-</span>
                     )}
-                  </td>
-                  <td>
-                    <div className="d-flex gap-2">
-                      <Link className="btn btn-outline-primary btn-sm" href={`/admin/hero/${slide.id}/edit`}><i aria-hidden="true" className="bi bi-pencil" /> Edit</Link>
-                      <DeleteRowButton id={slide.id} itemLabel={`Slide ${slide.sort_order}`} table="hero_slides" />
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                    <p className="admin-list-card-title mb-0">Urutan {slide.sort_order}</p>
+                  </div>
+                </div>
+                <div className="admin-list-card-actions">
+                  <Link className="btn btn-outline-primary btn-sm" href={`/admin/hero/${slide.id}/edit`}><i aria-hidden="true" className="bi bi-pencil" /> Edit</Link>
+                  <DeleteRowButton id={slide.id} itemLabel={`Slide ${slide.sort_order}`} table="hero_slides" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
       )}
     </div>
   );

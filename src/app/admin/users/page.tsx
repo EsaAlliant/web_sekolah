@@ -36,35 +36,57 @@ export default async function AdminUsersPage() {
       {admins.length === 0 ? (
         <p className="text-muted-strong">Belum ada data.</p>
       ) : (
-        <div className="table-responsive">
-          <table className="table align-middle">
-            <thead>
-              <tr>
-                <th>Nama</th>
-                <th>Email</th>
-                <th>Role</th>
-                <th style={{ width: "14rem" }}>Aksi</th>
-              </tr>
-            </thead>
-            <tbody>
-              {admins.map((admin) => (
-                <tr key={admin.id}>
-                  <td>{admin.fullName || "-"}</td>
-                  <td>{admin.email}</td>
-                  <td><span className="staff-tag">{ROLE_LABELS[admin.role]}</span></td>
-                  <td>
-                    <div className="d-flex gap-2">
-                      <Link className="btn btn-outline-primary btn-sm" href={`/admin/users/${admin.id}/edit`}>
-                        <i aria-hidden="true" className="bi bi-pencil" /> Edit
-                      </Link>
-                      <DeleteAdminUserButton disabled={admin.id === user.id} id={admin.id} itemLabel={admin.fullName || admin.email} />
-                    </div>
-                  </td>
+        <>
+          <div className="table-responsive d-none d-md-block">
+            <table className="table align-middle">
+              <thead>
+                <tr>
+                  <th>Nama</th>
+                  <th>Email</th>
+                  <th>Role</th>
+                  <th style={{ width: "14rem" }}>Aksi</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {admins.map((admin) => (
+                  <tr key={admin.id}>
+                    <td>{admin.fullName || "-"}</td>
+                    <td>{admin.email}</td>
+                    <td><span className="staff-tag">{ROLE_LABELS[admin.role]}</span></td>
+                    <td>
+                      <div className="d-flex gap-2">
+                        <Link className="btn btn-outline-primary btn-sm" href={`/admin/users/${admin.id}/edit`}>
+                          <i aria-hidden="true" className="bi bi-pencil" /> Edit
+                        </Link>
+                        <DeleteAdminUserButton disabled={admin.id === user.id} id={admin.id} itemLabel={admin.fullName || admin.email} />
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="admin-list-cards d-md-none">
+            {admins.map((admin) => (
+              <div className="admin-list-card" key={admin.id}>
+                <div className="admin-list-card-top">
+                  <div style={{ minWidth: 0 }}>
+                    <p className="admin-list-card-title">{admin.fullName || "-"}</p>
+                    <p className="admin-list-card-subtitle">{admin.email}</p>
+                  </div>
+                  <span className="staff-tag mb-0">{ROLE_LABELS[admin.role]}</span>
+                </div>
+                <div className="admin-list-card-actions">
+                  <Link className="btn btn-outline-primary btn-sm" href={`/admin/users/${admin.id}/edit`}>
+                    <i aria-hidden="true" className="bi bi-pencil" /> Edit
+                  </Link>
+                  <DeleteAdminUserButton disabled={admin.id === user.id} id={admin.id} itemLabel={admin.fullName || admin.email} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
       )}
     </div>
   );

@@ -84,11 +84,21 @@ export function PpdbForm({ majors, sheetWebhookUrl }: { majors: Major[]; sheetWe
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState(false);
   const [sheetError, setSheetError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
   const stepRefs = useRef<Array<HTMLFieldSetElement | null>>([]);
 
   const update = (field: keyof FormState) => (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setForm((prev) => ({ ...prev, [field]: event.target.value }));
+  };
+
+  // Buat field angka (NIK, No. KK, Nomor HP, Kode Pos): otomatis buang
+  // karakter selain angka pas diketik, dan batasi jumlah digitnya. Validasi
+  // panjang pas (16 digit, dst) tetap dicek juga lewat atribut pattern di
+  // JSX supaya nggak bisa submit kalau kurang/lebih digitnya.
+  const updateNumeric = (field: keyof FormState, maxLength: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    const digitsOnly = event.target.value.replace(/\D/g, "").slice(0, maxLength);
+    setForm((prev) => ({ ...prev, [field]: digitsOnly }));
   };
 
   // Validasi cuma field-field di sesi yang sedang aktif, bukan seluruh form.
@@ -124,6 +134,7 @@ export function PpdbForm({ majors, sheetWebhookUrl }: { majors: Major[]; sheetWe
     setSaving(true);
     setSaveError(false);
     setSheetError(false);
+    setEmailError(false);
 
     const supabase = createClient();
     const { error } = await supabase.from("ppdb_submissions").insert({
@@ -244,6 +255,30 @@ export function PpdbForm({ majors, sheetWebhookUrl }: { majors: Major[]; sheetWe
       setSheetError(true);
     }
 
+    // Kirim email konfirmasi ke alamat email peserta sendiri, sebagai bukti
+    // "sudah terdaftar". Ini best-effort — kalau gagal (misalnya layanan
+    // email belum di-setup di server), pendaftaran tetap dianggap sukses
+    // karena data intinya sudah aman di database.
+    try {
+      const emailResponse = await fetch("/api/ppdb-confirmation", {
+        body: JSON.stringify({
+          email: form.email,
+          fullName: form.fullName,
+          majorName: major ? `${major.name} (${major.abbreviation})` : undefined,
+          registrationType: form.registrationType,
+        }),
+        headers: { "Content-Type": "application/json" },
+        method: "POST",
+      });
+      if (!emailResponse.ok) {
+        console.warn("Email konfirmasi PPDB tidak terkirim (status:", emailResponse.status, ")");
+        setEmailError(true);
+      }
+    } catch (emailErr) {
+      console.error("Gagal memanggil layanan email konfirmasi PPDB:", emailErr);
+      setEmailError(true);
+    }
+
     setSaving(false);
     setSubmitted(true);
   };
@@ -296,11 +331,13 @@ export function PpdbForm({ majors, sheetWebhookUrl }: { majors: Major[]; sheetWe
           </div>
           <div className="col-md-3">
             <label className="form-label" htmlFor="kkNumber">Nomor Kartu Keluarga</label>
-            <input className="form-control" id="kkNumber" onChange={update("kkNumber")} required type="text" value={form.kkNumber} />
+            <input className="form-control" id="kkNumber" inputMode="numeric" maxLength={16} onChange={updateNumeric("kkNumber", 16)} pattern="\d{16}" required title="Nomor KK harus 16 digit angka" type="text" value={form.kkNumber} />
+            <div className="form-text">16 digit angka</div>
           </div>
           <div className="col-md-3">
             <label className="form-label" htmlFor="nik">No. Induk Kependudukan (NIK)</label>
-            <input className="form-control" id="nik" onChange={update("nik")} required type="text" value={form.nik} />
+            <input className="form-control" id="nik" inputMode="numeric" maxLength={16} onChange={updateNumeric("nik", 16)} pattern="\d{16}" required title="NIK harus 16 digit angka" type="text" value={form.nik} />
+            <div className="form-text">16 digit angka</div>
           </div>
 
           <div className="col-md-6">
@@ -367,12 +404,14 @@ export function PpdbForm({ majors, sheetWebhookUrl }: { majors: Major[]; sheetWe
           </div>
           <div className="col-md-4">
             <label className="form-label" htmlFor="postalCode">Kode Pos</label>
-            <input className="form-control" id="postalCode" onChange={update("postalCode")} required type="text" value={form.postalCode} />
+            <input className="form-control" id="postalCode" inputMode="numeric" maxLength={5} onChange={updateNumeric("postalCode", 5)} pattern="\d{5}" required title="Kode Pos harus 5 digit angka" type="text" value={form.postalCode} />
+            <div className="form-text">5 digit angka</div>
           </div>
 
           <div className="col-md-6">
             <label className="form-label" htmlFor="phone">Nomor HP</label>
-            <input className="form-control" id="phone" onChange={update("phone")} required type="tel" value={form.phone} />
+            <input className="form-control" id="phone" inputMode="numeric" maxLength={13} onChange={updateNumeric("phone", 13)} pattern="\d{10,13}" required title="Nomor HP harus 10-13 digit angka" type="tel" value={form.phone} />
+            <div className="form-text">10-13 digit angka</div>
           </div>
           <div className="col-md-6">
             <label className="form-label" htmlFor="email">Alamat Email</label>
@@ -409,7 +448,8 @@ export function PpdbForm({ majors, sheetWebhookUrl }: { majors: Major[]; sheetWe
           </div>
           <div className="col-md-6">
             <label className="form-label" htmlFor="fatherNik">NIK Ayah</label>
-            <input className="form-control" id="fatherNik" onChange={update("fatherNik")} required type="text" value={form.fatherNik} />
+            <input className="form-control" id="fatherNik" inputMode="numeric" maxLength={16} onChange={updateNumeric("fatherNik", 16)} pattern="\d{16}" required title="NIK harus 16 digit angka" type="text" value={form.fatherNik} />
+            <div className="form-text">16 digit angka</div>
           </div>
           <div className="col-md-3">
             <label className="form-label" htmlFor="fatherBirthYear">Tahun Lahir Ayah</label>
@@ -449,7 +489,8 @@ export function PpdbForm({ majors, sheetWebhookUrl }: { majors: Major[]; sheetWe
           </div>
           <div className="col-md-6">
             <label className="form-label" htmlFor="motherNik">NIK Ibu</label>
-            <input className="form-control" id="motherNik" onChange={update("motherNik")} required type="text" value={form.motherNik} />
+            <input className="form-control" id="motherNik" inputMode="numeric" maxLength={16} onChange={updateNumeric("motherNik", 16)} pattern="\d{16}" required title="NIK harus 16 digit angka" type="text" value={form.motherNik} />
+            <div className="form-text">16 digit angka</div>
           </div>
           <div className="col-md-3">
             <label className="form-label" htmlFor="motherBirthYear">Tahun Lahir Ibu</label>
@@ -490,7 +531,8 @@ export function PpdbForm({ majors, sheetWebhookUrl }: { majors: Major[]; sheetWe
           </div>
           <div className="col-md-6">
             <label className="form-label" htmlFor="guardianNik">NIK Wali</label>
-            <input className="form-control" id="guardianNik" onChange={update("guardianNik")} type="text" value={form.guardianNik} />
+            <input className="form-control" id="guardianNik" inputMode="numeric" maxLength={16} onChange={updateNumeric("guardianNik", 16)} pattern="\d{16}" title="NIK harus 16 digit angka" type="text" value={form.guardianNik} />
+            <div className="form-text">16 digit angka (kalau diisi)</div>
           </div>
           <div className="col-md-3">
             <label className="form-label" htmlFor="guardianBirthYear">Tahun Lahir Wali</label>
@@ -548,9 +590,15 @@ export function PpdbForm({ majors, sheetWebhookUrl }: { majors: Major[]; sheetWe
         </p>
       )}
 
-      {submitted && !saveError && !sheetError && (
+      {emailError && (
+        <p className="ppdb-form-note ppdb-form-error">
+          <i aria-hidden="true" className="bi bi-exclamation-triangle" /> Email konfirmasi gagal terkirim ke {form.email || "alamat email kamu"}. Pendaftaran kamu tetap tercatat, cuma buktinya belum masuk email.
+        </p>
+      )}
+
+      {submitted && !saveError && !sheetError && !emailError && (
         <p className="ppdb-form-note">
-          <i aria-hidden="true" className="bi bi-check-circle" /> Pendaftaran berhasil dikirim. Terima kasih, panitia PPDB akan memproses data kamu.
+          <i aria-hidden="true" className="bi bi-check-circle" /> Pendaftaran berhasil dikirim. Cek email kamu ({form.email}) untuk bukti pendaftaran — panitia PPDB akan memproses data kamu.
         </p>
       )}
     </form>

@@ -17,41 +17,70 @@ export default async function AdminGalleryPage() {
       {items.length === 0 ? (
         <p className="text-muted-strong">Belum ada data galeri.</p>
       ) : (
-        <div className="table-responsive">
-          <table className="table align-middle">
-            <thead>
-              <tr>
-                <th style={{ width: "4rem" }}>Foto</th>
-                <th>Judul</th>
-                <th>Kategori</th>
-                <th>Tanggal</th>
-                <th style={{ width: "12rem" }}>Aksi</th>
-              </tr>
-            </thead>
-            <tbody>
-              {items.map((item) => (
-                <tr key={item.id}>
-                  <td>
+        <>
+          <div className="table-responsive d-none d-md-block">
+            <table className="table align-middle">
+              <thead>
+                <tr>
+                  <th style={{ width: "4rem" }}>Foto</th>
+                  <th>Judul</th>
+                  <th>Kategori</th>
+                  <th>Tanggal</th>
+                  <th style={{ width: "12rem" }}>Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                {items.map((item) => (
+                  <tr key={item.id}>
+                    <td>
+                      <div className="admin-thumb">
+                        {item.photoUrl ? <img alt={item.title} src={item.photoUrl} /> : <i aria-hidden="true" className={`bi ${item.icon}`} />}
+                      </div>
+                    </td>
+                    <td>{item.title}</td>
+                    <td>{item.category}</td>
+                    <td>{item.date}</td>
+                    <td>
+                      <div className="d-flex gap-2">
+                        <Link className="btn btn-outline-primary btn-sm" href={`/admin/gallery/${item.id}/edit`}>
+                          <i aria-hidden="true" className="bi bi-pencil" /> Edit
+                        </Link>
+                        <DeleteRowButton id={item.id} itemLabel={item.title} table="gallery_items" />
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="admin-list-cards d-md-none">
+            {items.map((item) => (
+              <div className="admin-list-card" key={item.id}>
+                <div className="admin-list-card-top">
+                  <div className="admin-list-card-identity">
                     <div className="admin-thumb">
                       {item.photoUrl ? <img alt={item.title} src={item.photoUrl} /> : <i aria-hidden="true" className={`bi ${item.icon}`} />}
                     </div>
-                  </td>
-                  <td>{item.title}</td>
-                  <td>{item.category}</td>
-                  <td>{item.date}</td>
-                  <td>
-                    <div className="d-flex gap-2">
-                      <Link className="btn btn-outline-primary btn-sm" href={`/admin/gallery/${item.id}/edit`}>
-                        <i aria-hidden="true" className="bi bi-pencil" /> Edit
-                      </Link>
-                      <DeleteRowButton id={item.id} itemLabel={item.title} table="gallery_items" />
+                    <div style={{ minWidth: 0 }}>
+                      <p className="admin-list-card-title">{item.title}</p>
+                      <p className="admin-list-card-subtitle">{item.category}</p>
                     </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                  </div>
+                </div>
+                <dl className="admin-list-card-meta">
+                  <div><dt>Tanggal</dt><dd>{item.date}</dd></div>
+                </dl>
+                <div className="admin-list-card-actions">
+                  <Link className="btn btn-outline-primary btn-sm" href={`/admin/gallery/${item.id}/edit`}>
+                    <i aria-hidden="true" className="bi bi-pencil" /> Edit
+                  </Link>
+                  <DeleteRowButton id={item.id} itemLabel={item.title} table="gallery_items" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
       )}
     </div>
   );

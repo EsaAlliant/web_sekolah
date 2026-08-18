@@ -69,4 +69,18 @@ button, input, textarea, select { font: inherit; }
 .ppdb-submission-card-meta dd { margin: 0; overflow: hidden; text-align: right; text-overflow: ellipsis; white-space: nowrap; }
 @media (max-width: 359.98px) { .ppdb-status-select { min-width: 7.5rem; } }
 
+.admin-list-cards { display: grid; gap: .75rem; }
+.admin-list-card { background: #fff; border: 1px solid rgba(15, 23, 42, 0.08); border-radius: .75rem; padding: 1rem; }
+.admin-list-card-top { align-items: flex-start; display: flex; gap: .75rem; justify-content: space-between; margin-bottom: .75rem; }
+.admin-list-card-identity { align-items: center; display: flex; gap: .75rem; min-width: 0; }
+.admin-list-card-identity .admin-thumb { flex-shrink: 0; }
+.admin-list-card-title { font-size: .95rem; font-weight: 600; margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.admin-list-card-subtitle { color: #64748b; font-size: .8rem; margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.admin-list-card-meta { display: grid; font-size: .83rem; gap: .45rem; margin: 0 0 .85rem; }
+.admin-list-card-meta > div { display: flex; gap: .75rem; justify-content: space-between; }
+.admin-list-card-meta dt { color: #64748b; flex-shrink: 0; }
+.admin-list-card-meta dd { margin: 0; overflow: hidden; text-align: right; text-overflow: ellipsis; white-space: nowrap; }
+.admin-list-card-actions { display: flex; gap: .5rem; }
+.admin-list-card-actions > * { flex: 1; }
+
 .history-milestone-row { background: var(--school-surface); border-radius: 0.5rem; padding: 0.75rem; }
