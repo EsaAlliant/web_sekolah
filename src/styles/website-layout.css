@@ -333,12 +333,24 @@
 .ppdb-submit { margin-top: 1.5rem; }
 .ppdb-form-note { color: #64748b; font-size: .82rem; margin-top: .85rem; }
 .ppdb-form-note i { color: var(--school-primary); margin-right: .3rem; }
+.ppdb-session-title { border-bottom: 1px solid rgba(15,23,42,.08); color: var(--school-primary); font-size: 1.05rem; font-weight: 800; margin-bottom: 1.25rem; padding-bottom: .6rem; width: 100%; }
+.ppdb-wizard-steps { counter-reset: step; display: flex; gap: .5rem; list-style: none; margin: 0 0 2rem; padding: 0; }
+.ppdb-wizard-step { flex: 1; }
+.ppdb-wizard-step-btn { align-items: center; background: none; border: 0; color: inherit; display: flex; gap: .65rem; padding: 0; text-align: left; width: 100%; }
+.ppdb-wizard-step-number { align-items: center; background: #eef1f5; border-radius: 50%; color: #64748b; display: flex; flex-shrink: 0; font-size: .85rem; font-weight: 800; height: 2.1rem; justify-content: center; width: 2.1rem; }
+.ppdb-wizard-step-label { color: #94a3b8; font-size: .72rem; font-weight: 700; line-height: 1.3; text-transform: uppercase; }
+.ppdb-wizard-step-label small { font-size: .7rem; font-weight: 600; text-transform: none; }
+.ppdb-wizard-step.is-active .ppdb-wizard-step-number { background: var(--school-primary); color: #fff; }
+.ppdb-wizard-step.is-active .ppdb-wizard-step-label { color: var(--school-primary); }
+.ppdb-wizard-step.is-done .ppdb-wizard-step-number { background: #dcfce7; color: #15803d; }
+[data-theme-root][data-theme="dark"] .ppdb-session-title { border-color: #2b3b50; }
+@media (max-width: 575.98px) { .ppdb-wizard-steps { flex-wrap: wrap; } .ppdb-wizard-step { flex: 1 1 45%; } .ppdb-wizard-step-label { display: none; } }
+.ppdb-form-error { color: #dc2626; font-weight: 600; }
 
 [data-theme-root][data-theme="dark"] .ppdb-status-bar, [data-theme-root][data-theme="dark"] .ppdb-step { background: #152235; border-color: #2b3b50; }
 [data-theme-root][data-theme="dark"] .ppdb-requirements li { color: #e5edf7; }
 
 @media (max-width: 575.98px) { .ppdb-status-bar { flex-direction: column; align-items: flex-start; } }
-.ppdb-form-error { color: #dc2626; font-weight: 600; }
 .facility-photo { aspect-ratio: 16 / 10; border-radius: .5rem; margin-bottom: 1rem; }
 .contact-map-frame { border-radius: .75rem; height: 100%; min-height: 20rem; overflow: hidden; }
 .contact-map-frame iframe { border: 0; height: 100%; width: 100%; }

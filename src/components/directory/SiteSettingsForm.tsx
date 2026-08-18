@@ -18,6 +18,7 @@ export function SiteSettingsForm({ settings, socialLinks }: { settings: WebsiteS
   const [phone, setPhone] = useState(settings.phone);
   const [email, setEmail] = useState(settings.email);
   const [whatsappUrl, setWhatsappUrl] = useState(settings.whatsappUrl);
+  const [ppdbSheetWebhookUrl, setPpdbSheetWebhookUrl] = useState(settings.ppdbSheetWebhookUrl);
   const [officeHours, setOfficeHours] = useState(settings.officeHours);
   const [accreditation, setAccreditation] = useState(settings.accreditation);
   const [foundedYear, setFoundedYear] = useState(settings.foundedYear);
@@ -48,6 +49,7 @@ export function SiteSettingsForm({ settings, socialLinks }: { settings: WebsiteS
       phone,
       email,
       whatsapp_url: whatsappUrl,
+      ppdb_sheet_webhook_url: ppdbSheetWebhookUrl,
       office_hours: officeHours,
       accreditation,
       founded_year: foundedYear,
@@ -115,8 +117,17 @@ export function SiteSettingsForm({ settings, socialLinks }: { settings: WebsiteS
           <input className="form-control" id="officeHours" onChange={(event) => setOfficeHours(event.target.value)} type="text" value={officeHours} />
         </div>
         <div className="col-12">
-          <label className="form-label" htmlFor="whatsappUrl">Link WhatsApp (buat form PPDB &amp; Kontak)</label>
+          <label className="form-label" htmlFor="whatsappUrl">Link WhatsApp (buat form Kontak)</label>
           <input className="form-control" id="whatsappUrl" onChange={(event) => setWhatsappUrl(event.target.value)} placeholder="https://wa.me/62..." type="text" value={whatsappUrl} />
+        </div>
+      </div>
+
+      <h2 className="h6 mb-3">Integrasi PPDB (Google Sheets)</h2>
+      <div className="row g-3 mb-4">
+        <div className="col-12">
+          <label className="form-label" htmlFor="ppdbSheetWebhookUrl">URL Web App Google Apps Script</label>
+          <input className="form-control" id="ppdbSheetWebhookUrl" onChange={(event) => setPpdbSheetWebhookUrl(event.target.value)} placeholder="https://script.google.com/macros/s/xxxxx/exec" type="text" value={ppdbSheetWebhookUrl} />
+          <p className="form-text">Setiap pendaftar PPDB baru otomatis dikirim ke Google Sheet lewat URL ini. Lihat panduan setup di file <code>ppdb-sheets-setup.md</code>.</p>
         </div>
       </div>
 

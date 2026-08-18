@@ -68,10 +68,11 @@ export default async function PpdbPage() {
       <Section className="section-alt">
         <h2 className="h4 mb-2">Form Pendaftaran</h2>
         <p className="text-muted-strong mb-4">
-          Isi data di bawah ini, lalu kirim melalui tombol WhatsApp. Data akan otomatis tersusun rapi dan terkirim
-          langsung ke panitia PPDB untuk diproses lebih lanjut.
+          Form terdiri dari 4 sesi: Data Diri, Data Ayah, Data Ibu, dan Data Wali. Isi setiap sesi lalu klik
+          &quot;Selanjutnya&quot;. Setelah sesi terakhir, klik &quot;Kirim Pendaftaran&quot; — data akan otomatis
+          tersusun rapi dan tercatat langsung untuk diproses panitia PPDB.
         </p>
-        <PpdbForm majors={majors} whatsappUrl={settings.whatsappUrl} />
+        <PpdbForm majors={majors} sheetWebhookUrl={settings.ppdbSheetWebhookUrl} />
       </Section>
     </>
   );

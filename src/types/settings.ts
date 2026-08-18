@@ -20,6 +20,7 @@ export interface WebsiteSettings {
   officeHours: string;
   mapUrl: string;
   whatsappUrl: string;
+  ppdbSheetWebhookUrl: string;
   theme: ThemePreference;
   accreditation: string;
   foundedYear: string;

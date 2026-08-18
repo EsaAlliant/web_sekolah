@@ -12,6 +12,7 @@ export interface WebsiteSettingsRow {
   phone: string | null;
   email: string | null;
   whatsapp_url: string | null;
+  ppdb_sheet_webhook_url: string | null;
   office_hours: string | null;
   logo_text: string | null;
   map_url: string | null;
@@ -220,16 +221,53 @@ export interface PpdbInfoRow {
 
 export interface PpdbSubmissionRow {
   id: string;
+  // Sesi 1 - Data Diri Peserta Didik
+  registration_type: string;
   full_name: string;
   gender: string;
-  birth_place: string | null;
-  birth_date: string | null;
-  previous_school: string | null;
-  address: string | null;
-  parent_name: string | null;
-  parent_phone: string | null;
+  kk_number: string;
+  nik: string;
+  previous_school: string;
+  birth_place: string;
+  birth_date: string;
+  religion: string;
+  address: string;
+  rt_rw: string;
+  dusun: string;
+  village: string;
+  district: string;
+  regency: string;
+  province: string;
+  postal_code: string;
+  living_arrangement: string;
+  transportation: string;
+  child_order: string;
+  phone: string;
+  email: string;
+  hobby: string;
+  ambition: string;
   major_id: string | null;
-  notes: string | null;
+  // Sesi 2 - Data Ayah Kandung
+  father_name: string;
+  father_nik: string;
+  father_birth_year: string;
+  father_education: string;
+  father_job: string;
+  father_income: string;
+  // Sesi 3 - Data Ibu Kandung
+  mother_name: string;
+  mother_nik: string;
+  mother_birth_year: string;
+  mother_education: string;
+  mother_job: string;
+  mother_income: string;
+  // Sesi 4 - Data Wali (opsional, kalau tinggal dengan wali)
+  guardian_name: string | null;
+  guardian_nik: string | null;
+  guardian_birth_year: string | null;
+  guardian_education: string | null;
+  guardian_job: string | null;
+  guardian_income: string | null;
   status: "baru" | "diverifikasi" | "diterima" | "ditolak";
   created_at: string;
 }

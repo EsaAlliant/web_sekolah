@@ -19,8 +19,8 @@ export function LogoutButton() {
   };
 
   return (
-    <button className="btn btn-outline-secondary btn-sm" disabled={loading} onClick={handleLogout} type="button">
-      <i aria-hidden="true" className="bi bi-box-arrow-right" /> {loading ? "Keluar..." : "Keluar"}
+    <button className="btn btn-outline-secondary btn-sm" disabled={loading} onClick={handleLogout} title="Keluar" type="button">
+      <i aria-hidden="true" className="bi bi-box-arrow-right" /> <span className="d-none d-sm-inline">{loading ? "Keluar..." : "Keluar"}</span>
     </button>
   );
 }
