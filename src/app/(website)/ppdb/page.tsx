@@ -1,5 +1,5 @@
 import { PageBanner } from "@/components/common/PageBanner";
-import { PpdbForm } from "@/components/directory/PpdbForm";
+import { PpdbRegistrationGate } from "@/components/directory/PpdbRegistrationGate";
 import { Section } from "@/components/common/Section";
 import { SignatureDivider } from "@/components/common/SignatureDivider";
 import { getMajors } from "@/services/academic.service";
@@ -67,12 +67,14 @@ export default async function PpdbPage() {
 
       <Section className="section-alt">
         <h2 className="h4 mb-2">Form Pendaftaran</h2>
-        <p className="text-muted-strong mb-4">
-          Form terdiri dari 4 sesi: Data Diri, Data Ayah, Data Ibu, dan Data Wali. Isi setiap sesi lalu klik
-          &quot;Selanjutnya&quot;. Setelah sesi terakhir, klik &quot;Kirim Pendaftaran&quot; — data akan otomatis
-          tersusun rapi dan tercatat langsung untuk diproses panitia PPDB.
-        </p>
-        <PpdbForm majors={majors} sheetWebhookUrl={settings.ppdbSheetWebhookUrl} />
+        {ppdb.status === "open" && (
+          <p className="text-muted-strong mb-4">
+            Form terdiri dari 4 sesi: Data Diri, Data Ayah, Data Ibu, dan Data Wali. Isi setiap sesi lalu klik
+            &quot;Selanjutnya&quot;. Setelah sesi terakhir, klik &quot;Kirim Pendaftaran&quot; — data akan otomatis
+            tersusun rapi dan tercatat langsung untuk diproses panitia PPDB.
+          </p>
+        )}
+        <PpdbRegistrationGate majors={majors} sheetWebhookUrl={settings.ppdbSheetWebhookUrl} status={ppdb.status} />
       </Section>
     </>
   );

@@ -11,16 +11,20 @@ import "@/styles/bootstrap-overrides.css";
 import "@/styles/website-layout.css";
 import "./globals.css";
 import { AppProviders } from "@/providers/AppProviders";
-import { siteConfig } from "@/config/site";
+import { getWebsiteSettings } from "@/services/settings.service";
 
 const sora = Sora({ subsets: ["latin"], weight: ["500", "600", "700", "800"], variable: "--font-display-src", display: "swap" });
 const inter = Inter({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-body-src", display: "swap" });
 const ibmPlexMono = IBM_Plex_Mono({ subsets: ["latin"], weight: ["500", "600"], variable: "--font-mono-src", display: "swap" });
 
-export const metadata: Metadata = {
-  title: { default: siteConfig.name, template: `%s | ${siteConfig.name}` },
-  description: siteConfig.description,
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getWebsiteSettings();
+  return {
+    title: { default: settings.name, template: `%s | ${settings.shortName}` },
+    description: settings.description,
+    icons: settings.logoUrl ? { icon: settings.logoUrl } : undefined,
+  };
+}
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
