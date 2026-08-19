@@ -1,2 +1,3 @@
 .page-section { padding-block: clamp(2.5rem, 6vw, 5rem); }
 .text-muted-strong { color: #64748b !important; }
+[data-theme-root][data-theme="dark"] .text-muted-strong { color: #a9bccd !important; }

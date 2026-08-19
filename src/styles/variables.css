@@ -19,6 +19,24 @@
   --school-text: #E7F1EE;
   --school-sidebar: #0A1B22;
   --school-border: #24413C;
+
+  /* Variabel inti Bootstrap juga ikut di-set ulang di sini. Banyak
+     komponen bawaan Bootstrap (form-control, dropdown, border utility,
+     text-body-secondary, dst) sebenarnya udah nge-reference variabel
+     --bs-* ini secara internal, jadi dengan nimpa nilainya di sini,
+     komponen-komponen itu otomatis ikut gelap tanpa perlu di-override
+     satu-satu terus-terusan. */
+  --bs-body-color: #e5edf7;
+  --bs-body-bg: #101827;
+  --bs-border-color: #2b3b50;
+  --bs-border-color-translucent: rgba(255,255,255,.15);
+  --bs-secondary-color: #8ea2ba;
+  --bs-secondary-bg: #152235;
+  --bs-tertiary-bg: #152235;
+  --bs-tertiary-color: #8ea2ba;
+  --bs-emphasis-color: #e5edf7;
+  --bs-link-color: #3FB3A6;
+  --bs-link-hover-color: #3FB3A6;
 }
 
 body {
@@ -71,3 +89,62 @@ h1, h2, h3, h4, h5, h6,
 [data-theme-root][data-theme="dark"] p {
   color: var(--school-text);
 }
+
+/* Elemen/kelas Bootstrap dasar (form, card, alert, dst) punya warna
+   sendiri yang nggak otomatis ngikutin --school-text/--school-surface.
+   Tanpa override di bawah ini, input/textarea/select, kartu, dan alert
+   akan tetap keliatan putih terang nyala di tengah halaman gelap. */
+[data-theme-root][data-theme="dark"] .form-control,
+[data-theme-root][data-theme="dark"] .form-select {
+  background-color: #101827;
+  border-color: #2b3b50;
+  color: #e5edf7;
+}
+[data-theme-root][data-theme="dark"] .form-control::placeholder { color: #64768c; }
+[data-theme-root][data-theme="dark"] .form-control:focus,
+[data-theme-root][data-theme="dark"] .form-select:focus {
+  background-color: #101827;
+  border-color: var(--school-primary);
+  box-shadow: 0 0 0 .25rem rgba(63,179,166,.25);
+  color: #e5edf7;
+}
+[data-theme-root][data-theme="dark"] .form-control:disabled,
+[data-theme-root][data-theme="dark"] .form-select:disabled { background-color: #152235; color: #64768c; }
+[data-theme-root][data-theme="dark"] .form-control:read-only { background-color: #152235; }
+[data-theme-root][data-theme="dark"] .form-label { color: #e5edf7; }
+[data-theme-root][data-theme="dark"] .form-text { color: #8ea2ba; }
+[data-theme-root][data-theme="dark"] .form-check-input { background-color: #101827; border-color: #49627f; }
+[data-theme-root][data-theme="dark"] .form-check-input:checked { background-color: var(--school-primary); border-color: var(--school-primary); }
+[data-theme-root][data-theme="dark"] .form-check-label { color: #e5edf7; }
+
+[data-theme-root][data-theme="dark"] .text-body-secondary,
+[data-theme-root][data-theme="dark"] .text-muted { color: #8ea2ba !important; }
+
+[data-theme-root][data-theme="dark"] .card {
+  background-color: #152235;
+  border-color: #2b3b50;
+  color: #e5edf7;
+}
+[data-theme-root][data-theme="dark"] .list-group-item {
+  background-color: #152235;
+  border-color: #2b3b50;
+  color: #e5edf7;
+}
+
+/* Ikon silang di modal (search, galeri) default-nya gelap — nyaris nggak
+   keliatan di atas background gelap. Dibalik jadi terang. */
+[data-theme-root][data-theme="dark"] .btn-close { filter: invert(1) grayscale(1) brightness(1.7); }
+
+[data-theme-root][data-theme="dark"] .btn-outline-secondary { border-color: #49627f; color: #b7c5d6; }
+[data-theme-root][data-theme="dark"] .btn-outline-secondary:hover:not(:disabled) { background-color: #1d2e44; color: #e5edf7; }
+[data-theme-root][data-theme="dark"] .btn-outline-primary { border-color: var(--school-primary); color: var(--school-primary); }
+[data-theme-root][data-theme="dark"] .btn-outline-primary:hover:not(:disabled) { color: #0F211E; }
+[data-theme-root][data-theme="dark"] .btn-outline-danger { border-color: #f87171; color: #f87171; }
+[data-theme-root][data-theme="dark"] .btn-outline-danger:hover:not(:disabled) { background-color: rgba(248,113,113,.15); color: #fca5a5; }
+
+[data-theme-root][data-theme="dark"] .alert-danger { background-color: rgba(248,113,113,.12); border-color: rgba(248,113,113,.35); color: #fca5a5; }
+[data-theme-root][data-theme="dark"] .alert-success { background-color: rgba(74,222,128,.12); border-color: rgba(74,222,128,.35); color: #86efac; }
+[data-theme-root][data-theme="dark"] .alert-warning { background-color: rgba(250,204,21,.12); border-color: rgba(250,204,21,.35); color: #fde047; }
+
+[data-theme-root][data-theme="dark"] hr { border-color: #2b3b50; opacity: 1; }
+[data-theme-root][data-theme="dark"] ::selection { background: rgba(63,179,166,.35); }
