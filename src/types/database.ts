@@ -60,6 +60,14 @@ export interface FooterLinkRow {
   sort_order: number;
 }
 
+export interface LegalPageSectionRow {
+  id: string;
+  page: string;
+  heading: string;
+  body: string;
+  sort_order: number;
+}
+
 export interface TeacherRow {
   id: string;
   name: string;

@@ -51,6 +51,13 @@ export const dashboardNavigationGroups: DashboardNavGroup[] = [
     ],
   },
   {
+    label: "Legal",
+    items: [
+      { label: "Kebijakan Privasi", href: "/admin/legal-privacy" },
+      { label: "Ketentuan Penggunaan", href: "/admin/legal-terms" },
+    ],
+  },
+  {
     label: "Sistem",
     items: [
       { label: "Akun Saya", href: "/admin/account" },
