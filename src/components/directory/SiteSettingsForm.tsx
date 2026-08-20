@@ -8,6 +8,7 @@ import type { FooterLink } from "@/types/footer";
 
 interface SocialLinkRow extends SocialLink { id: string; }
 interface FooterLinkRow extends FooterLink { id: string; }
+interface TickerItemRow { id: string; message: string; }
 
 let tempIdCounter = 0;
 function createTempId() {
@@ -15,7 +16,7 @@ function createTempId() {
   return `new-${Date.now()}-${tempIdCounter}`;
 }
 
-export function SiteSettingsForm({ settings, socialLinks, footerLinks }: { settings: WebsiteSettings; socialLinks: SocialLinkRow[]; footerLinks: FooterLinkRow[] }) {
+export function SiteSettingsForm({ settings, socialLinks, footerLinks, tickerItems }: { settings: WebsiteSettings; socialLinks: SocialLinkRow[]; footerLinks: FooterLinkRow[]; tickerItems: TickerItemRow[] }) {
   const router = useRouter();
 
   const [name, setName] = useState(settings.name);
@@ -34,6 +35,8 @@ export function SiteSettingsForm({ settings, socialLinks, footerLinks }: { setti
   const [footerLinksTitle, setFooterLinksTitle] = useState(settings.footerLinksTitle);
   const [footerLinkItems, setFooterLinkItems] = useState(footerLinks);
   const originalFooterLinkIds = footerLinks.map((link) => link.id);
+  const [tickerMessages, setTickerMessages] = useState(tickerItems);
+  const originalTickerIds = tickerItems.map((item) => item.id);
 
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -53,6 +56,26 @@ export function SiteSettingsForm({ settings, socialLinks, footerLinks }: { setti
 
   const removeFooterLink = (id: string) => {
     setFooterLinkItems(footerLinkItems.filter((link) => link.id !== id));
+  };
+
+  const updateTickerMessage = (id: string, message: string) => {
+    setTickerMessages(tickerMessages.map((item) => (item.id === id ? { ...item, message } : item)));
+  };
+
+  const addTickerMessage = () => {
+    setTickerMessages([...tickerMessages, { id: createTempId(), message: "" }]);
+  };
+
+  const removeTickerMessage = (id: string) => {
+    setTickerMessages(tickerMessages.filter((item) => item.id !== id));
+  };
+
+  const moveTickerMessage = (index: number, direction: -1 | 1) => {
+    const target = index + direction;
+    if (target < 0 || target >= tickerMessages.length) return;
+    const next = [...tickerMessages];
+    [next[index], next[target]] = [next[target], next[index]];
+    setTickerMessages(next);
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -97,11 +120,10 @@ export function SiteSettingsForm({ settings, socialLinks, footerLinks }: { setti
       }),
     );
 
-    setSaving(false);
     const failedLink = linkErrors.find((result) => result.error);
     const failedFooterLink = footerLinkUpserts.find((result) => result.error);
     const saveError = settingsError || failedLink?.error || failedFooterLink?.error;
-    if (saveError) { setError(saveError.message); return; }
+    if (saveError) { setSaving(false); setError(saveError.message); return; }
 
     setFooterLinkItems(
       footerLinkItems.map((link, index) => {
@@ -110,6 +132,29 @@ export function SiteSettingsForm({ settings, socialLinks, footerLinks }: { setti
       }),
     );
 
+    const removedTickerIds = originalTickerIds.filter((id) => !tickerMessages.some((item) => item.id === id));
+    await Promise.all(removedTickerIds.map((id) => supabase.from("announcement_ticker").delete().eq("id", id)));
+
+    const tickerUpserts = await Promise.all(
+      tickerMessages.map((item, index) => {
+        const isNew = item.id.startsWith("new-");
+        return isNew
+          ? supabase.from("announcement_ticker").insert({ message: item.message, sort_order: index }).select().single()
+          : supabase.from("announcement_ticker").update({ message: item.message, sort_order: index }).eq("id", item.id).select().single();
+      }),
+    );
+
+    const failedTicker = tickerUpserts.find((result) => result.error);
+    if (failedTicker?.error) { setSaving(false); setError(failedTicker.error.message); return; }
+
+    setTickerMessages(
+      tickerMessages.map((item, index) => {
+        const savedId = tickerUpserts[index].data?.id as string | undefined;
+        return savedId ? { id: savedId, message: item.message } : item;
+      }),
+    );
+
+    setSaving(false);
     setSaved(true);
     router.refresh();
   };
@@ -206,6 +251,32 @@ export function SiteSettingsForm({ settings, socialLinks, footerLinks }: { setti
           <button className="btn btn-sm btn-outline-secondary" onClick={addFooterLink} type="button">
             <i aria-hidden="true" className="bi bi-plus-lg me-1" />Tambah Link
           </button>
+        </div>
+      </div>
+
+      <h2 className="h6 mb-3">Teks Berjalan (running text di bagian paling atas situs)</h2>
+      <div className="row g-3 mb-4">
+        {tickerMessages.map((item, index) => (
+          <div className="col-12 d-flex gap-2 align-items-start" key={item.id}>
+            <input aria-label="Isi teks berjalan" className="form-control" onChange={(event) => updateTickerMessage(item.id, event.target.value)} placeholder="mis. Penerimaan Peserta Didik Baru Tahun Ajaran 2026/2027 telah dibuka." type="text" value={item.message} />
+            <div className="d-flex gap-1 flex-shrink-0">
+              <button className="btn btn-outline-secondary btn-sm" disabled={index === 0} onClick={() => moveTickerMessage(index, -1)} title="Naikkan urutan" type="button">
+                <i aria-hidden="true" className="bi bi-arrow-up" />
+              </button>
+              <button className="btn btn-outline-secondary btn-sm" disabled={index === tickerMessages.length - 1} onClick={() => moveTickerMessage(index, 1)} title="Turunkan urutan" type="button">
+                <i aria-hidden="true" className="bi bi-arrow-down" />
+              </button>
+              <button aria-label="Hapus teks" className="btn btn-outline-danger btn-sm" onClick={() => removeTickerMessage(item.id)} type="button">
+                <i aria-hidden="true" className="bi bi-trash" />
+              </button>
+            </div>
+          </div>
+        ))}
+        <div className="col-12">
+          <button className="btn btn-sm btn-outline-secondary" onClick={addTickerMessage} type="button">
+            <i aria-hidden="true" className="bi bi-plus-lg me-1" />Tambah Teks
+          </button>
+          <p className="form-text mb-0">Kalau diisi lebih dari satu, teksnya bakal jalan bergantian secara berurutan.</p>
         </div>
       </div>
 

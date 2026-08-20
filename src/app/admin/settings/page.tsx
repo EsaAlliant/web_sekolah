@@ -2,18 +2,20 @@ import { LogoSettingsForm } from "@/components/directory/LogoSettingsForm";
 import { SiteSettingsForm } from "@/components/directory/SiteSettingsForm";
 import { createServerClient } from "@/lib/supabase/server";
 import { getWebsiteSettings } from "@/services/settings.service";
-import type { FooterLinkRow, SocialLinkRow } from "@/types/database";
+import type { AnnouncementTickerRow, FooterLinkRow, SocialLinkRow } from "@/types/database";
 
 export default async function AdminSettingsPage() {
   const supabase = await createServerClient();
-  const [settings, { data: socialLinksData }, { data: footerLinksData }] = await Promise.all([
+  const [settings, { data: socialLinksData }, { data: footerLinksData }, { data: tickerData }] = await Promise.all([
     getWebsiteSettings(),
     supabase.from("social_links").select("*").order("sort_order"),
     supabase.from("footer_links").select("*").order("sort_order"),
+    supabase.from("announcement_ticker").select("*").order("sort_order"),
   ]);
 
   const socialLinks = ((socialLinksData ?? []) as SocialLinkRow[]).map((row) => ({ id: row.id, label: row.label, href: row.href, icon: row.icon }));
   const footerLinks = ((footerLinksData ?? []) as FooterLinkRow[]).map((row) => ({ id: row.id, label: row.label, href: row.href }));
+  const tickerItems = ((tickerData ?? []) as AnnouncementTickerRow[]).map((row) => ({ id: row.id, message: row.message }));
 
   return (
     <div>
@@ -30,7 +32,7 @@ export default async function AdminSettingsPage() {
 
         <div className="col-lg-8">
           <div className="admin-stat-card text-start">
-            <SiteSettingsForm footerLinks={footerLinks} settings={settings} socialLinks={socialLinks} />
+            <SiteSettingsForm footerLinks={footerLinks} settings={settings} socialLinks={socialLinks} tickerItems={tickerItems} />
           </div>
         </div>
       </div>

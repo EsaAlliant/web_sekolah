@@ -215,7 +215,9 @@ export function PpdbForm({ majors, sheetWebhookUrl }: { majors: Major[]; sheetWe
     setEmailError(false);
 
     const supabase = createClient();
-    const { error } = await supabase.from("ppdb_submissions").insert({
+    const { data: submission, error } = await supabase
+      .from("ppdb_submissions")
+      .insert({
       registration_type: form.registrationType,
       full_name: form.fullName,
       gender: form.gender,
@@ -259,7 +261,9 @@ export function PpdbForm({ majors, sheetWebhookUrl }: { majors: Major[]; sheetWe
       guardian_education: form.guardianEducation || null,
       guardian_job: form.guardianJob || null,
       guardian_income: form.guardianIncome || null,
-    });
+    })
+      .select("id, created_at")
+      .single();
 
     if (error) {
       console.error("Gagal menyimpan pendaftaran PPDB:", error.message);
@@ -343,7 +347,10 @@ export function PpdbForm({ majors, sheetWebhookUrl }: { majors: Major[]; sheetWe
           email: form.email,
           fullName: form.fullName,
           majorName: major ? `${major.name} (${major.abbreviation})` : undefined,
+          phone: form.phone,
+          registrationId: submission?.id,
           registrationType: form.registrationType,
+          submittedAt: submission?.created_at,
         }),
         headers: { "Content-Type": "application/json" },
         method: "POST",
